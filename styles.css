@@ -880,9 +880,23 @@ section[id] {
   .status-wrapper { justify-content: center; }
 
   .hero-cloud {
-    left: -40px;
-    right: -40px;
-    top: -60px;
-    bottom: -120px;
+    display: none;
+  }
+
+  .eyebrow {
+    text-shadow: none;
+    -webkit-text-stroke: 0;
+  }
+
+  .hero-text h1 {
+    text-shadow: none;
+  }
+
+  .lede {
+    text-shadow: none;
+  }
+
+  .highlight-name {
+    text-shadow: 0 0 10px rgba(255, 136, 72, 0.859);
   }
 }
