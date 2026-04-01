@@ -118,6 +118,106 @@ function renderTimeline() {
 renderProjects();
 renderTimeline();
 
+// Starfield canvas — twinkling stars + shooting stars
+(() => {
+  const canvas = document.getElementById('starfield');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, stars = [], shooters = [];
+  let lastTs = 0, nextShot = 1500 + Math.random() * 2000;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function makeStar() {
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.2 + 0.3,
+      base: Math.random() * 0.5 + 0.25,
+      phase: Math.random() * Math.PI * 2,
+      freq: Math.random() * 0.8 + 0.2,
+    };
+  }
+
+  function spawnShooter() {
+    const fromTop = Math.random() > 0.3;
+    shooters.push({
+      x: fromTop ? Math.random() * W * 0.8 : W + 10,
+      y: fromTop ? -10 : Math.random() * H * 0.4,
+      vx: -(250 + Math.random() * 350),
+      vy:   200 + Math.random() * 250,
+      tail: 100 + Math.random() * 120,
+      life: 1,
+    });
+  }
+
+  function draw(ts) {
+    const dt = Math.min((ts - lastTs) / 1000, 0.05);
+    lastTs = ts;
+    nextShot -= dt * 1000;
+
+    ctx.clearRect(0, 0, W, H);
+
+    for (const s of stars) {
+      const a = s.base + Math.sin(ts / 1000 * s.freq + s.phase) * 0.25;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${Math.max(0, Math.min(1, a))})`;
+      ctx.fill();
+    }
+
+    for (let i = shooters.length - 1; i >= 0; i--) {
+      const s = shooters[i];
+      s.x += s.vx * dt;
+      s.y += s.vy * dt;
+      s.life -= dt * 0.65;
+
+      if (s.life <= 0 || s.x < -150 || s.y > H + 100) {
+        shooters.splice(i, 1);
+        continue;
+      }
+
+      const speed = Math.sqrt(s.vx * s.vx + s.vy * s.vy);
+      const nx = s.vx / speed;
+      const ny = s.vy / speed;
+      const tx = s.x - nx * s.tail;
+      const ty = s.y - ny * s.tail;
+
+      const g = ctx.createLinearGradient(tx, ty, s.x, s.y);
+      g.addColorStop(0, 'rgba(255,255,255,0)');
+      g.addColorStop(0.6, `rgba(200,240,255,${s.life * 0.35})`);
+      g.addColorStop(1, `rgba(255,255,255,${s.life})`);
+
+      ctx.beginPath();
+      ctx.moveTo(tx, ty);
+      ctx.lineTo(s.x, s.y);
+      ctx.strokeStyle = g;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, 1.8, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${s.life})`;
+      ctx.fill();
+    }
+
+    if (nextShot <= 0) {
+      spawnShooter();
+      nextShot = 2000 + Math.random() * 4000;
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  stars = Array.from({ length: 200 }, makeStar);
+  requestAnimationFrame(draw);
+})();
+
 // CSS-driven typewriter for elements with .typewriter
 (() => {
   const typewriters = Array.from(document.querySelectorAll(".typewriter"));

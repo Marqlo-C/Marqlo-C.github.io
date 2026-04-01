@@ -19,7 +19,17 @@
 
 body {
   margin: 0;
-  background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+  background: linear-gradient(
+    -45deg,
+    #070f11,
+    #122c33,
+    #0d2217,
+    #1a1230,
+    #122c33,
+    #070f11
+  );
+  background-size: 400% 400%;
+  animation: gradientShift 18s ease infinite;
   color: var(--ink);
   min-height: 100vh;
   overflow-x: hidden;
@@ -489,19 +499,87 @@ main {
 
 .starfield,
 .grid-overlay,
-.floating-leaves {
+.aurora {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
 }
 
+.aurora {
+  overflow: hidden;
+}
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.18;
+  will-change: transform;
+}
+
+.blob-1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  top: -10%;
+  left: -5%;
+  animation: blobDrift1 20s ease-in-out infinite;
+}
+
+.blob-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--accent-2) 0%, transparent 70%);
+  top: 30%;
+  right: -10%;
+  animation: blobDrift2 26s ease-in-out infinite;
+}
+
+.blob-3 {
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, var(--accent-3) 0%, transparent 70%);
+  bottom: -15%;
+  left: 20%;
+  animation: blobDrift3 22s ease-in-out infinite;
+}
+
+.blob-4 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  top: 60%;
+  left: 60%;
+  animation: blobDrift4 30s ease-in-out infinite;
+}
+
+@keyframes blobDrift1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(80px, 60px) scale(1.1); }
+  66%       { transform: translate(-40px, 100px) scale(0.95); }
+}
+
+@keyframes blobDrift2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(-100px, 60px) scale(1.05); }
+  66%       { transform: translate(-60px, -80px) scale(1.15); }
+}
+
+@keyframes blobDrift3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(60px, -80px) scale(1.1); }
+}
+
+@keyframes blobDrift4 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25%       { transform: translate(-80px, -60px) scale(1.1); }
+  75%       { transform: translate(60px, 40px) scale(0.9); }
+}
+
 .starfield {
-  background-image:
-    radial-gradient(1px 1px at 20% 30%, rgba(255, 255, 255, 0.35), transparent),
-    radial-gradient(1px 1px at 80% 40%, rgba(255, 255, 255, 0.2), transparent),
-    radial-gradient(1px 1px at 50% 70%, rgba(255, 255, 255, 0.25), transparent);
-  opacity: 0.8;
+  width: 100%;
+  height: 100%;
 }
 
 .grid-overlay {
@@ -512,24 +590,11 @@ main {
   mix-blend-mode: soft-light;
 }
 
-.floating-leaves::before,
-.floating-leaves::after {
-  content: "";
-  position: absolute;
-  inset: -20% 0;
-  background-repeat: repeat;
-  background-size: 200px 200px;
-  opacity: 0.18;
-}
 
-.floating-leaves::before {
-  background-image: radial-gradient(6px 10px at 30% 30%, #b5d67c, transparent);
-  animation: float 22s linear infinite;
-}
-
-.floating-leaves::after {
-  background-image: radial-gradient(8px 8px at 70% 60%, #f2b5a8, transparent);
-  animation: float 28s linear infinite reverse;
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes float {
