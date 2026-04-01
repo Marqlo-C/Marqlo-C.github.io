@@ -878,4 +878,11 @@ section[id] {
   .typewriter-group { justify-content: center; }
   .contact-row, .cta-row { justify-content: center; }
   .status-wrapper { justify-content: center; }
+
+  .hero-cloud {
+    left: -40px;
+    right: -40px;
+    top: -60px;
+    bottom: -120px;
+  }
 }
