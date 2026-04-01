@@ -118,6 +118,36 @@ function renderTimeline() {
 renderProjects();
 renderTimeline();
 
+// Active nav highlight
+(() => {
+  const navLinks = document.querySelectorAll('.nav a[href^="#"]');
+  const sections = Array.from(navLinks)
+    .map(link => document.querySelector(link.getAttribute('href')))
+    .filter(Boolean);
+
+  const intersecting = new Set();
+
+  const setActive = () => {
+    const active = sections.find(s => intersecting.has(s.id));
+    navLinks.forEach(link => {
+      link.classList.toggle('active', active ? link.getAttribute('href') === `#${active.id}` : false);
+    });
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        intersecting.add(entry.target.id);
+      } else {
+        intersecting.delete(entry.target.id);
+      }
+    });
+    setActive();
+  }, { rootMargin: '-40% 0px -55% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+})();
+
 // Scroll reveal
 (() => {
   const observer = new IntersectionObserver((entries) => {

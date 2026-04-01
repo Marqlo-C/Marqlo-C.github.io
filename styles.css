@@ -105,6 +105,15 @@ a {
   transform: translateY(-2px);
 }
 
+.nav a.active {
+  color: #FF7F50;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(255, 127, 80, 0.8), 0 0 20px rgba(255, 127, 80, 0.4);
+  background: rgba(255, 127, 80, 0.1);
+  box-shadow: 0 0 10px rgba(255, 127, 80, 0.3), 0 0 24px rgba(255, 127, 80, 0.15), inset 0 0 10px rgba(255, 127, 80, 0.08);
+  border-radius: 10px;
+}
+
 .nav .pill {
   border: 1px solid var(--border);
 }
@@ -162,6 +171,10 @@ main {
   display: flex;
   flex-direction: column;
   gap: 32px;
+}
+
+section[id] {
+  scroll-margin-top: 90px;
 }
 
 .hero {
