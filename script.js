@@ -33,7 +33,7 @@ const projects = [
     title: "Aggie-gility — Adaptive Aerodynamics Prototype",
     summary: "Arduino-powered model that adjusts aerodynamic surfaces on braking to increase downforce; handled programming, sensors, and motor control in a UC Davis AvenueE team.",
     tags: ["Arduino", "Embedded", "Hardware", "Sensors"],
-    link: "https://www.linkedin.com/in/marq-lott/details/projects/"
+    link: "https://www.linkedin.com/in/marq-lott/details/projects/#1727734114532"
   },
   {
     title: "Note Taking App",
@@ -93,7 +93,7 @@ function renderProjects() {
       <div class="card-title">${project.title}</div>
       <p>${project.summary}</p>
       <div class="chip-row">${project.tags.map((tag) => `<span class="chip">${tag}</span>`).join("")}</div>
-      <a class="link" href="${project.link}">View project →</a>
+      ${project.link ? `<a class="link" href="${project.link}" target="_blank" rel="noopener">View project →</a>` : ''}
     `;
     projectGrid.appendChild(card);
   });
@@ -104,12 +104,11 @@ function renderTimeline() {
     const entry = document.createElement("article");
     entry.className = "timeline-item";
     entry.innerHTML = `
+      <div class="timeline-dot"></div>
       <div class="timeline-date">${item.date}</div>
-      <div>
-        <div class="timeline-role">${item.role}</div>
-        <div class="timeline-meta">${item.place}</div>
-        <p>${item.blurb}</p>
-      </div>
+      <div class="timeline-role">${item.role}</div>
+      <div class="timeline-meta">${item.place}</div>
+      <p>${item.blurb}</p>
     `;
     timelineList.appendChild(entry);
   });
@@ -117,6 +116,36 @@ function renderTimeline() {
 
 renderProjects();
 renderTimeline();
+
+// mailto fallback to Gmail if no mail app is configured
+document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
+  link.addEventListener('click', () => {
+    const fallback = link.dataset.gmailFallback;
+    const start = Date.now();
+    setTimeout(() => {
+      if (Date.now() - start < 1500) {
+        window.open(fallback, '_blank');
+      }
+    }, 1000);
+  });
+});
+
+// Resume modal
+(() => {
+  const modal = document.getElementById('resume-modal');
+  const openBtn = document.getElementById('resume-btn');
+  const closeBtn = modal.querySelector('.resume-close');
+  const backdrop = modal.querySelector('.resume-modal-backdrop');
+
+  const open = () => { modal.hidden = false; document.body.style.overflow = 'hidden'; };
+  const close = () => { modal.hidden = true; document.body.style.overflow = ''; };
+
+  openBtn.addEventListener('click', open);
+  document.getElementById('resume-btn-contact').addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+  backdrop.addEventListener('click', close);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+})();
 
 // Active nav highlight
 (() => {
@@ -131,6 +160,9 @@ renderTimeline();
     const active = sections.find(s => intersecting.has(s.id));
     navLinks.forEach(link => {
       link.classList.toggle('active', active ? link.getAttribute('href') === `#${active.id}` : false);
+    });
+    sections.forEach(s => {
+      s.classList.toggle('active-section', active ? s.id === active.id : false);
     });
   };
 
@@ -154,7 +186,9 @@ renderTimeline();
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
+      } else if (entry.boundingClientRect.top > 0) {
+        // Element is below the viewport — user scrolled back up, hide it
+        entry.target.classList.remove('visible');
       }
     });
   }, { threshold: 0.1 });
@@ -172,7 +206,6 @@ renderTimeline();
     });
   };
 
-  // Cards are rendered dynamically so wait for them
   if (document.readyState === 'complete') {
     observeCards();
   } else {
@@ -187,6 +220,12 @@ renderTimeline();
   const ctx = canvas.getContext('2d');
   let W, H, stars = [], shooters = [];
   let lastTs = 0, nextShot = 1500 + Math.random() * 2000;
+
+  const beemo = new Image();
+  beemo.src = './resources/images/beemo easter egg.png';
+
+  const serverBeemo = new Image();
+  serverBeemo.src = './resources/images/server rack beemo easter.png';
 
   function resize() {
     W = canvas.width = window.innerWidth;
@@ -206,6 +245,8 @@ renderTimeline();
 
   function spawnShooter() {
     const fromTop = Math.random() > 0.3;
+    const roll = Math.random();
+    const easterEgg = roll < 0.15 ? 'beemo' : roll < 0.30 ? 'serverBeemo' : null;
     shooters.push({
       x: fromTop ? Math.random() * W * 0.8 : W + 10,
       y: fromTop ? -10 : Math.random() * H * 0.4,
@@ -213,6 +254,8 @@ renderTimeline();
       vy:   200 + Math.random() * 250,
       tail: 100 + Math.random() * 120,
       life: 1,
+      easterEgg,
+      easterEggSize: 32 + Math.random() * 64,
     });
   }
 
@@ -245,25 +288,35 @@ renderTimeline();
       const speed = Math.sqrt(s.vx * s.vx + s.vy * s.vy);
       const nx = s.vx / speed;
       const ny = s.vy / speed;
-      const tx = s.x - nx * s.tail;
-      const ty = s.y - ny * s.tail;
 
-      const g = ctx.createLinearGradient(tx, ty, s.x, s.y);
-      g.addColorStop(0, 'rgba(255,255,255,0)');
-      g.addColorStop(0.6, `rgba(200,240,255,${s.life * 0.35})`);
-      g.addColorStop(1, `rgba(255,255,255,${s.life})`);
+      const eggImg = s.easterEgg === 'beemo' ? beemo : s.easterEgg === 'serverBeemo' ? serverBeemo : null;
+      if (eggImg && eggImg.complete && eggImg.naturalWidth > 0) {
+        const size = s.easterEggSize;
+        ctx.save();
+        ctx.globalAlpha = s.life;
+        ctx.drawImage(eggImg, s.x - size / 2, s.y - size / 2, size, size);
+        ctx.restore();
+      } else {
+        const tx = s.x - nx * s.tail;
+        const ty = s.y - ny * s.tail;
 
-      ctx.beginPath();
-      ctx.moveTo(tx, ty);
-      ctx.lineTo(s.x, s.y);
-      ctx.strokeStyle = g;
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
+        const g = ctx.createLinearGradient(tx, ty, s.x, s.y);
+        g.addColorStop(0, 'rgba(255,255,255,0)');
+        g.addColorStop(0.6, `rgba(200,240,255,${s.life * 0.35})`);
+        g.addColorStop(1, `rgba(255,255,255,${s.life})`);
 
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, 1.8, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${s.life})`;
-      ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(tx, ty);
+        ctx.lineTo(s.x, s.y);
+        ctx.strokeStyle = g;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, 1.8, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${s.life})`;
+        ctx.fill();
+      }
     }
 
     if (nextShot <= 0) {
@@ -345,7 +398,8 @@ renderTimeline();
         i += 1;
         if (i < chars) {
           current = Math.max(min, current * factor);
-          setTimeout(tick, current);
+          const jitter = (Math.random() - 0.5) * current * 0.4;
+          setTimeout(tick, Math.max(min, current + jitter));
         } else {
           // Restore markup; keep cursor blinking here until next line starts.
           el.innerHTML = originalHTML;
