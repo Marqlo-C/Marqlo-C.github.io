@@ -118,6 +118,38 @@ function renderTimeline() {
 renderProjects();
 renderTimeline();
 
+// Scroll reveal
+(() => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.panel').forEach((el) => {
+    el.classList.add('reveal');
+    observer.observe(el);
+  });
+
+  const observeCards = () => {
+    document.querySelectorAll('.card, .timeline-item').forEach((el, i) => {
+      el.classList.add('reveal');
+      el.style.transitionDelay = `${(i % 4) * 80}ms`;
+      observer.observe(el);
+    });
+  };
+
+  // Cards are rendered dynamically so wait for them
+  if (document.readyState === 'complete') {
+    observeCards();
+  } else {
+    window.addEventListener('load', observeCards);
+  }
+})();
+
 // Starfield canvas — twinkling stars + shooting stars
 (() => {
   const canvas = document.getElementById('starfield');

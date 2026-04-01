@@ -19,6 +19,7 @@
 
 body {
   margin: 0;
+  background-color: #070f11;
   background: linear-gradient(
     -45deg,
     #070f11,
@@ -365,6 +366,18 @@ main {
   border-radius: 16px;
   padding: 24px;
   box-shadow: var(--shadow);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .panel-header {
