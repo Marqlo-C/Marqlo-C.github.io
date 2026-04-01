@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marq Lott | Personal Website</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="starfield"></div>
+  <div class="floating-leaves" aria-hidden="true"></div>
+  <div class="grid-overlay"></div>
+
+  <header class="site-header">
+    <div class="brand">
+      <img src="./resources/images/profile_picture.jpeg" alt="ML Brand Mark" class="brand-mark">
+      <div>
+        <div class="brand-name">Marq Lott</div>
+        <div class="brand-tagline">CS '26 • Software Engineering • AI • Web</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <a href="#about">About</a>
+      <a href="#focus">Focus</a>
+      <a href="#projects">Projects</a>
+      <a href="#timeline">Timeline</a>
+      <a class="pill" href="#contact">Contact</a>
+    </nav>
+    <button class="hamburger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <main>
+    <nav id="mobile-menu" class="mobile-menu" hidden>
+      <a href="#about">About</a>
+      <a href="#focus">Focus</a>
+      <a href="#projects">Projects</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <section class="hero hero-centered">
+      <div class="portrait-stack">
+        <div class="portrait-frame">
+          <img src="./resources/images/profile_picture.jpeg" alt="Portrait of Marq Lott">
+        </div>
+      </div>
+
+      <div class="hero-text">
+        <p class="eyebrow fade-in">Hi there, have we met before?</p>
+        <h1 class="typewriter-group">
+          <span
+            class="typewriter no-cursor"
+            data-accelerate="true"
+            data-speed="500"
+            data-minspeed="60"
+            data-accelfactor="0.65"
+            data-pause="0.75"
+            data-startpause="1.25"
+          >hello world,</span>
+          <span
+            class="typewriter"
+            data-accelerate="true"
+            data-speed="500"
+            data-minspeed="60"
+            data-accelfactor="0.45"
+            data-pause="0.0"
+          >I'm <span class="highlight-name">Marq</span>.
+          </span>
+        </h1>
+        <p class="lede">
+          I’m a Computer Science senior at UC Davis who likes shipping things that feel helpful and a little playful. I pick up tools fast (docs, AI, example code) so I can focus on building with people (GDSC collabs, hackathons, late nights smoothing out UX quirks). My primary interests are using data and AI to lift real communities, building accessible tools that feel genuinely useful to everyday people, and getting scrappy projects from zero to one. The list keeps growing as I learn.
+        </p>
+        <div class="contact-row">
+          <span class="chip contact-chip">Davis, CA</span>
+          <span class="chip contact-chip">(213) 817-0484</span>
+          <a class="chip contact-chip" href="mailto:marquiseclott@gmail.com">marquiseclott@gmail.com</a>
+        </div>
+        <div class="cta-row">
+          <a class="btn primary" href="https://www.linkedin.com/in/marq-lott/" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn ghost" href="https://github.com/Marqlo-C" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="status-wrapper">
+      <div class="status-chip">Open to internships and new grad software roles • AI + web development focus</div>
+    </div>
+
+    <section class="panel" id="about">
+      <div class="panel-header">
+        <div class="panel-title">About</div>
+        <div class="panel-subtitle">Engineering things that actually help the folks around me.</div>
+      </div>
+      <p>
+        I’m Marq, a Computer Science senior graduating in 2026 who uses code as a way to solve real problems and give back. Trashform captures my urge to help my community breathe cleaner air and recycle smarter. Work on EcoCar and mioCar showed me how tech can expand affordable mobility for people who need it most. Programming is my current medium, but the heart of it is service.
+      </p>
+      <p>
+        I’m a quick study with docs, AI tools, and example code, and I like to switch hats: leading when a project needs direction, or quietly clearing merge conflicts when the team is sprinting. I speak well, break problems down fast, and care about interfaces that feel human. Outside the keyboard, I sketch ideas and tinker with visuals because software should feel like a conversation, not just a tool.
+      </p>
+    </section>
+
+    <section class="panel" id="focus">
+      <div class="panel-header">
+        <div class="panel-title">Focus Areas</div>
+        <div class="panel-subtitle">Where I invest curiosity and time.</div>
+      </div>
+      <div class="panel-grid three focus-grid">
+        <article class="card">
+          <div class="card-title">Software Engineering</div>
+          <p>Building dependable services and shipping user-facing features with clean abstractions.</p>
+          <div class="chip-row">
+            <span class="chip">APIs</span>
+            <span class="chip">Systems Design</span>
+            <span class="chip">Testing</span>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-title">AI Exploration</div>
+          <p>Applying ML-assisted tools for productivity and prototyping intelligent, playful experiences.</p>
+          <div class="chip-row">
+            <span class="chip">AI tooling</span>
+            <span class="chip">LLMs</span>
+            <span class="chip">Automation</span>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-title">Web Development</div>
+          <p>Crafting expressive interfaces with delightful microinteractions and thoughtful layouts.</p>
+          <div class="chip-row">
+            <span class="chip">Performance</span>
+            <span class="chip">Animations</span>
+            <span class="chip">Accessibility</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" id="projects">
+      <div class="panel-header">
+        <div class="panel-title">Projects</div>
+        <div class="panel-subtitle">Selected builds — rendered dynamically from data.</div>
+      </div>
+      <div class="panel-grid two" id="project-grid"></div>
+    </section>
+
+    <section class="panel" id="stack">
+      <div class="panel-header">
+        <div class="panel-title">Dev Stack</div>
+        <div class="panel-subtitle">Languages, frameworks, and tools I reach for most.</div>
+      </div>
+      <div class="panel-grid three">
+        <article class="card">
+          <div class="card-title">Languages</div>
+          <div class="chip-row">
+            <span class="chip">Python</span>
+            <span class="chip">JavaScript</span>
+            <span class="chip">TypeScript</span>
+            <span class="chip">C/C++</span>
+            <span class="chip">Java</span>
+            <span class="chip">SQL</span>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-title">Frameworks & Frontend</div>
+          <div class="chip-row">
+            <span class="chip">React</span>
+            <span class="chip">Next.js</span>
+            <span class="chip">HTML/CSS</span>
+            <span class="chip">Canvas</span>
+            <span class="chip">Animations</span>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-title">Tools & Platforms</div>
+          <div class="chip-row">
+            <span class="chip">Git/GitHub</span>
+            <span class="chip">APIs/REST</span>
+            <span class="chip">Maps/Geo</span>
+            <span class="chip">AI tooling</span>
+            <span class="chip">Testing</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" id="timeline">
+      <div class="panel-header">
+        <div class="panel-title">Experience & Timeline</div>
+        <div class="panel-subtitle">Snapshots of learning and shipping.</div>
+      </div>
+      <div class="timeline" id="timeline-list"></div>
+    </section>
+
+    <section class="panel contact" id="contact">
+      <div class="panel-header">
+        <div class="panel-title">Contact</div>
+        <div class="panel-subtitle">Let's build together.</div>
+      </div>
+      <div class="panel-grid two">
+        <article class="card">
+          <div class="card-title">Stay in touch</div>
+          <p>Email me for opportunities, collaborations, or to talk creative tech.</p>
+          <div class="chip-row">
+            <a class="chip" href="mailto:marquiseclott@gmail.com">marquiseclott@gmail.com</a>
+            <span class="chip">Open to new grad roles</span>
+          </div>
+        </article>
+        <article class="card links">
+          <a class="btn primary" href="https://www.linkedin.com/in/marq-lott/" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn ghost" href="https://github.com/Marqlo-C" target="_blank" rel="noopener">GitHub</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>Built with curiosity • Pixel breeze meets Ghibli calm</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
