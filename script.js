@@ -85,6 +85,7 @@ const experiences = [
 const projectGrid = document.getElementById("project-grid");
 const timelineList = document.getElementById("timeline-list");
 
+// Stamps project cards into the grid from the projects array above.
 function renderProjects() {
   projects.forEach((project) => {
     const card = document.createElement("article");
@@ -99,6 +100,7 @@ function renderProjects() {
   });
 }
 
+// Stamps timeline entries into the timeline list from the experiences array above.
 function renderTimeline() {
   experiences.forEach((item) => {
     const entry = document.createElement("article");
@@ -117,7 +119,7 @@ function renderTimeline() {
 renderProjects();
 renderTimeline();
 
-// mailto fallback to Gmail if no mail app is configured
+// If the user doesn't have a mail client set up, fall back to Gmail compose in a new tab.
 document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   link.addEventListener('click', () => {
     const fallback = link.dataset.gmailFallback;
@@ -130,7 +132,7 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   });
 });
 
-// Resume modal
+// Resume modal - opens from both the hero and contact section buttons.
 (() => {
   const modal = document.getElementById('resume-modal');
   const openBtn = document.getElementById('resume-btn');
@@ -147,7 +149,7 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 })();
 
-// Active nav highlight
+// Highlights the nav link that corresponds to the section currently in view.
 (() => {
   const navLinks = document.querySelectorAll('.nav a[href^="#"]');
   const sections = Array.from(navLinks)
@@ -180,14 +182,13 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   sections.forEach(s => observer.observe(s));
 })();
 
-// Scroll reveal
+// Fades panels and cards in as they scroll into view; reverses on scroll up.
 (() => {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
       } else if (entry.boundingClientRect.top > 0) {
-        // Element is below the viewport — user scrolled back up, hide it
         entry.target.classList.remove('visible');
       }
     });
@@ -213,7 +214,32 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   }
 })();
 
-// Starfield canvas — twinkling stars + shooting stars
+// Parallax exit for the hero - each layer drifts and fades at a different rate as you scroll.
+(() => {
+  const cloud       = document.querySelector('.hero-cloud');
+  const portrait    = document.querySelector('.portrait-stack');
+  const heroText    = document.querySelector('.hero-text');
+  if (!cloud || !portrait || !heroText) return;
+
+  function onScroll() {
+    const heroEl = document.querySelector('.hero');
+    const heroH  = heroEl ? heroEl.offsetHeight : window.innerHeight;
+    const y      = window.scrollY;
+    const p      = Math.min(y / (heroH * 0.75), 1);
+
+    cloud.style.opacity   = Math.max(0, 1 - p * 2.0);
+    cloud.style.transform = `translateY(${-p * 20}px)`;
+
+    portrait.style.transform = `translateY(${-p * 30}px)`;
+
+    heroText.style.opacity   = Math.max(0, 1 - p * 1.0);
+    heroText.style.transform = `translateY(${-p * 50}px)`;
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
+
+// Starfield canvas - twinkling stars + shooting stars
 (() => {
   const canvas = document.getElementById('starfield');
   if (!canvas) return;
@@ -333,13 +359,14 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   requestAnimationFrame(draw);
 })();
 
-// CSS-driven typewriter for elements with .typewriter
+// Typewriter effect - types each .typewriter element in sequence, accelerating per character with a bit of jitter.
 (() => {
   const typewriters = Array.from(document.querySelectorAll(".typewriter"));
-  const defaultDuration = 2; // seconds
+  const defaultDuration = 2;
   let cumulativeDelay = 0;
   let lastCursorEl = null;
 
+  // Estimates total typing duration for accelerating mode so CSS delays can chain correctly.
   const estimateAccelDuration = (chars, base, min, factor) => {
     let total = 0;
     let current = base;
@@ -347,7 +374,7 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
       total += current;
       current = Math.max(min, current * factor);
     }
-    return total / 1000; // convert ms to seconds
+    return total / 1000;
   };
 
   const typeQueue = [...typewriters];
@@ -359,22 +386,20 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
     const originalHTML = el.innerHTML;
     const text = (el.textContent || "").trim();
     const chars = text.length || 1;
-    const pause = Number(el.dataset.pause) || 0; // seconds
-    const startPause = Number(el.dataset.startpause) || 0; // seconds
+    const pause = Number(el.dataset.pause) || 0;
+    const startPause = Number(el.dataset.startpause) || 0;
     const accelerate = el.dataset.accelerate === "true";
 
     if (accelerate) {
-      const base = Number(el.dataset.speed) || 140; // ms
-      const min = Number(el.dataset.minspeed) || 80; // ms
+      const base = Number(el.dataset.speed) || 140;
+      const min = Number(el.dataset.minspeed) || 80;
       const factor = Number(el.dataset.accelfactor) || 0.9;
       const pauseMs = pause * 1000;
 
-      // Prepare for manual typing
       el.textContent = "";
       el.style.whiteSpace = "nowrap";
       el.style.maxWidth = "none";
 
-        // Move cursor to this element
         if (lastCursorEl && lastCursorEl !== el) {
           lastCursorEl.style.borderRightWidth = "0";
           lastCursorEl.style.animation = "none";
@@ -387,7 +412,6 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
         const blink = getComputedStyle(el).getPropertyValue("--cursor-blink") || "0.8s";
         el.style.animation = `blink ${blink.trim()} step-end infinite`;
 
-      // Show cursor during any start pause.
       el.textContent = " ";
 
       let current = base;
@@ -401,7 +425,6 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
           const jitter = (Math.random() - 0.5) * current * 0.4;
           setTimeout(tick, Math.max(min, current + jitter));
         } else {
-          // Restore markup; keep cursor blinking here until next line starts.
           el.innerHTML = originalHTML;
           el.style.whiteSpace = "normal";
           el.style.maxWidth = "none";
@@ -414,7 +437,6 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
         }
       };
 
-      // Wait for optional start pause, cursor blinking while idle.
       setTimeout(tick, startPause * 1000);
     } else {
       const duration = Number(el.dataset.duration) || defaultDuration;
@@ -423,13 +445,10 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
       el.style.setProperty("--typing-delay", `${cumulativeDelay}s`);
       cumulativeDelay += duration + pause;
 
-      // Reset and re-trigger animation
       el.classList.remove("active");
-      // force reflow
       void el.offsetWidth;
       el.classList.add("active");
 
-      // After typing finishes, allow wrapping so long text can break lines on small screens.
       const onEnd = (e) => {
         if (e.animationName !== "typing") return;
         el.style.whiteSpace = "normal";
@@ -443,7 +462,7 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   typeNext();
 })();
 
-// Mobile menu toggle
+// Mobile hamburger menu toggle.
 (() => {
   const button = document.querySelector(".hamburger");
   const menu = document.getElementById("mobile-menu");
