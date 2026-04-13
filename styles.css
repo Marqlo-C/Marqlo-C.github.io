@@ -1426,6 +1426,7 @@ span.chip-icon svg {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
     transform: translateY(-50%);
+    overflow: visible;
   }
 
   .floating-cta.visible {
@@ -1436,10 +1437,11 @@ span.chip-icon svg {
     flex-direction: row;
     align-items: center;
     gap: 8px;
-    padding: 8px 5px 8px 10px;
+    position: relative;
+    padding: 8px 8px 8px 10px;
     border-right: none;
     border-radius: 16px 0 0 16px;
-    transform: translateX(calc(100% - 27px));
+    transform: translateX(100%);
     transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
@@ -1465,9 +1467,13 @@ span.chip-icon svg {
 
   .floating-cta-tab {
     display: inline-flex;
+    position: absolute;
+    left: -28px;
+    top: 50%;
+    transform: translateY(-50%);
     align-items: center;
     justify-content: center;
-    width: 24px;
+    width: 28px;
     height: 70px;
     border: 1px solid rgba(154, 213, 214, 0.28);
     border-right: none;
