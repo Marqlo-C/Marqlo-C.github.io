@@ -439,32 +439,69 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   sections.forEach(s => observer.observe(s));
 })();
 
-// Fades panels and cards in as they scroll into view; reverses on scroll up.
+// Fades panels and cards in as they scroll into view once for stable rendering.
 (() => {
-  const isMobile = window.matchMedia('(max-width: 720px)').matches;
-  const isTablet = window.matchMedia('(min-width: 721px) and (max-width: 1199px)').matches;
+  const isMobileOrTablet = window.matchMedia('(max-width: 1199px)').matches;
   const aboutSection = document.querySelector('#about');
+  const topFadeSections = [
+    aboutSection,
+    ...document.querySelectorAll('#focus, #projects, #stack, #timeline, #contact'),
+  ].filter(Boolean);
+  const pendingReveal = new Set();
+
+  const revealElement = (el) => {
+    if (!el || !pendingReveal.has(el)) return;
+    el.classList.add('visible');
+    pendingReveal.delete(el);
+    observer.unobserve(el);
+  };
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      if (isTablet && entry.target === aboutSection) return;
-      if (entry.isIntersecting) {
+      if (isMobileOrTablet) {
+        if (entry.isIntersecting) {
+          revealElement(entry.target);
+        }
+      } else if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-      } else if (!isMobile) {
+      } else {
         entry.target.classList.remove('visible');
       }
     });
-  }, { threshold: isMobile ? 0.12 : 0.2, rootMargin: isMobile ? '-4% 0px -20% 0px' : '-10% 0px -10% 0px' });
+  }, isMobileOrTablet ? { threshold: 0, rootMargin: '0px 0px 14% 0px' } : { threshold: 0.2, rootMargin: '-10% 0px -10% 0px' });
 
   document.querySelectorAll('.panel').forEach((el) => {
     el.classList.add('reveal');
+    if (isMobileOrTablet) pendingReveal.add(el);
     observer.observe(el);
   });
 
   const observeCards = () => {
     document.querySelectorAll('.card, .timeline-item').forEach((el, i) => {
       el.classList.add('reveal');
-      el.style.transitionDelay = `${(i % 4) * 80}ms`;
+      el.style.transitionDelay = `${(i % (isMobileOrTablet ? 3 : 4)) * (isMobileOrTablet ? 55 : 80)}ms`;
+      if (isMobileOrTablet) pendingReveal.add(el);
       observer.observe(el);
+    });
+  };
+
+  const sweepReveals = () => {
+    if (pendingReveal.size === 0) return;
+    pendingReveal.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= window.innerHeight * 0.98 && rect.bottom >= -64) {
+        revealElement(el);
+      }
+    });
+  };
+
+  let sweepScheduled = false;
+  const requestSweep = () => {
+    if (sweepScheduled) return;
+    sweepScheduled = true;
+    requestAnimationFrame(() => {
+      sweepScheduled = false;
+      sweepReveals();
     });
   };
 
@@ -474,8 +511,14 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
     window.addEventListener('load', observeCards);
   }
 
-  if (isTablet && aboutSection) {
-    aboutSection.classList.add('tablet-about-pre-scroll');
+  if (isMobileOrTablet) {
+    requestSweep();
+    window.addEventListener('scroll', requestSweep, { passive: true });
+    window.addEventListener('resize', requestSweep, { passive: true });
+  }
+
+  if (aboutSection) {
+    topFadeSections.forEach((section) => section.classList.add('tablet-about-pre-scroll'));
     aboutSection.classList.remove('visible');
     window.addEventListener('load', () => {
       requestAnimationFrame(() => {
@@ -485,7 +528,8 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
 
     const syncAboutPreScroll = () => {
       const nearTop = window.scrollY <= 2;
-      aboutSection.classList.toggle('tablet-about-pre-scroll', nearTop);
+      document.body.classList.toggle('top-fade-mode', nearTop);
+      topFadeSections.forEach((section) => section.classList.toggle('tablet-about-pre-scroll', nearTop));
     };
 
     syncAboutPreScroll();
