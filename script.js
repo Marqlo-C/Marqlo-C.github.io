@@ -46,40 +46,46 @@ const projects = [
 
 const experiences = [
   {
-    date: "2026",
-    role: "B.S. Computer Science, Software Engineering emphasis",
-    place: "UC Davis",
-    blurb: "Projects with Google Developer Student Club plus group builds and hackathons; focus on dependable systems and expressive UX."
+    date: "2025 to now",
+    role: "B.S. Computer Science",
+    place: "UC Davis, College of Engineering",
+    blurb: "Program Advisor for AvenueE Summer Bridge, mentoring 60 first-generation engineering students from low-income and underrepresented backgrounds through a two-week intensive. Building backend infrastructure for EcoCAR Mobility: migrated API keys to the server, wrote scrapers to log carshare usage data so we can see where cars stop and help underserved communities get actual access to mobility, refactored TamperMonkey to run server-side instead of in the browser, fixed the OpenAI chatbot to maintain context across conversations for people who aren't technically inclined. Worked with the Aggie Mobility project using Arduino to explore adaptive aerodynamics for emergency braking. Shipped three applications over 2025: Emergency at HackDavis, Trashform at CalHacks AI, and a Note Taking App at CalHacks with different teams. Contributed to Toes Down for Google Developer Student Club. Active in NSBE and SAA. CalHacks 2026 coming."
   },
   {
-    date: "2024",
-    role: "A.S. Computer Science, Mathematics & Physics (Summa Cum Laude)",
+    date: "2024 to 2025",
+    role: "A.S. Computer Science & Physics",
     place: "San Joaquin Delta College",
-    blurb: "4.0 GPA; transferred with a foundation in math-heavy problem solving."
+    blurb: "Spent my savings living frugally and cramming what could have been three years of coursework into two. Graduated with an Associates in Computer Science, an Associates in Physics, and one class short of an Associates in Mathematics. Maintained a 4.0 GPA. The work meant no life outside of classes and studying. Collaborated with the Physics, Mathematics, and Computer Science Club on a solar system simulation in Python that modeled orbital mechanics and gravitational interactions from first principles."
   },
   {
-    date: "2023 — 2024",
-    role: "Team Projects & Hackathons",
-    place: "Student-led builds",
-    blurb: "Gameplay programming crews and weekend hackathons—shipping small scopes quickly with teammates."
+    date: "2020 to 2024",
+    role: "Stepped back",
+    place: "California",
+    blurb: "Left sales. Made the intentional call to go back to school because I knew I wanted to build systems, not sell them. That decision costs you in money, time, and pride. But it forces clarity."
   },
   {
-    date: "Jan 2020 — Jun 2021",
-    role: "Regional Account Manager",
-    place: "Cogent Communications, Los Angeles",
-    blurb: "Hit monthly sales goals by pairing technical offerings with client needs; honed listening and communication."
-  },
-  {
-    date: "2016 — 2020",
+    date: "2020 to 2021",
     role: "Sr. Business Account Executive",
     place: "Spectrum Enterprise, Los Angeles",
-    blurb: "Led full sales cycles for fiber and cloud solutions; partnered with engineering teams to clear implementation blockers."
+    blurb: "Came back for a second run at Spectrum. By this point most of the region was already built out with fiber, so the work was different. Less about landing new accounts and more about selling fiber upgrades and helping existing customers plan for their growing bandwidth demands. The pool of prospects was smaller but the technical depth went deeper. Fewer people to sell to meant conversations shifted toward understanding what their actual infrastructure needed to look like three years out."
   },
   {
-    date: "2013 — 2017",
+    date: "2020",
+    role: "Regional Account Manager",
+    place: "Cogent Communications, Los Angeles",
+    blurb: "In my first quarter, I hit 143% of quota selling enterprise telecom infrastructure. The role involved working with customers and our engineering team to design customized network buildouts across fiber, data centers, bandwidth, VPN, and server solutions. It wasn't about moving boxes off a spec sheet. It was understanding what a customer actually needed to accomplish, then working with our engineers to design a solution that would actually work for their situation, then making sure it got implemented correctly."
+  },
+  {
+    date: "2016 to 2020",
+    role: "Sr. Business Account Executive",
+    place: "Spectrum Enterprise, Los Angeles",
+    blurb: "Top performer in the region for four years straight. Owned Fortune 500 accounts from initial discovery through ongoing partnership. The real work was understanding what they had to accomplish with their network, proposing the right services and solutions, then staying involved through deployment to make sure everything actually worked the way they expected. Long sales cycles force you to understand the customer's problem or you don't close the deal. The relationships that stuck were the ones where they were still happy years later."
+  },
+  {
+    date: "2013 to 2017",
     role: "Cryptologic Technician - Networking",
     place: "US Navy, Los Angeles",
-    blurb: "Provided network-centric defense expertise; hands-on incident response and active defense strategies."
+    blurb: "Spent four years in network defense and incident response. Vulnerability assessment, threat detection, rebuilding what happened after systems got hit. Systems fail in predictable ways if you understand them. Understanding how something breaks is as important as knowing how it works, maybe more so. In a results-driven world, uptime, reliability, availability, security, and privacy aren't nice-to-haves. They're what determines whether people trust your system or avoid it entirely. Understanding the underlying weaknesses is as important as understanding the design."
   }
 ];
 
@@ -469,12 +475,23 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   }
 
   if (isTablet && aboutSection) {
+    aboutSection.classList.add('tablet-about-pre-scroll');
     aboutSection.classList.remove('visible');
     window.addEventListener('load', () => {
       requestAnimationFrame(() => {
         aboutSection.classList.add('visible');
       });
     }, { once: true });
+
+    const syncAboutPreScroll = () => {
+      const nearTop = window.scrollY <= 2;
+      aboutSection.classList.toggle('tablet-about-pre-scroll', nearTop);
+    };
+
+    syncAboutPreScroll();
+    window.addEventListener('scroll', syncAboutPreScroll, { passive: true });
+    window.addEventListener('wheel', syncAboutPreScroll, { passive: true });
+    window.addEventListener('touchmove', syncAboutPreScroll, { passive: true });
   }
 })();
 
