@@ -423,8 +423,11 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
 // Fades panels and cards in as they scroll into view; reverses on scroll up.
 (() => {
   const isMobile = window.matchMedia('(max-width: 720px)').matches;
+  const isTablet = window.matchMedia('(min-width: 721px) and (max-width: 1199px)').matches;
+  const aboutSection = document.querySelector('#about');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
+      if (isTablet && entry.target === aboutSection) return;
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
       } else if (!isMobile) {
@@ -450,6 +453,15 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
     observeCards();
   } else {
     window.addEventListener('load', observeCards);
+  }
+
+  if (isTablet && aboutSection) {
+    aboutSection.classList.remove('visible');
+    window.addEventListener('load', () => {
+      requestAnimationFrame(() => {
+        aboutSection.classList.add('visible');
+      });
+    }, { once: true });
   }
 })();
 
