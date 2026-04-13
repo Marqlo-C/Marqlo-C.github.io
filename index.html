@@ -17,51 +17,85 @@
   <div class="grid-overlay"></div>
 
   <header class="site-header">
-    <div class="brand">
-      <a href="https://www.linkedin.com/in/marq-lott/" target="_blank" rel="noopener" class="brand-icon-link">
-        <img src="./resources/images/InBug-White.png" alt="LinkedIn" class="brand-icon">
-      </a>
-      <a href="https://github.com/Marqlo-C" target="_blank" rel="noopener" class="brand-icon-link">
-        <img src="./resources/images/GitHub_Invertocat_White.png" alt="GitHub" class="brand-icon">
-      </a>
-      <div class="brand-text">
-        <div class="brand-name">Marq Lott</div>
-        <div class="brand-tagline">CS '26 • Software Engineering • AI • Cloud & DevOps</div>
-      </div>
-    </div>
     <nav class="nav">
-      <a href="#about">About</a>
-      <a href="#focus">Focus</a>
-      <a href="#projects">Projects</a>
-      <a href="#timeline">Timeline</a>
-      <a class="pill" href="#contact">Contact</a>
+      <a class="nav-top" href="#top" aria-label="Top">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 19V5"></path><path d="M6 11l6-6 6 6"></path></svg>
+        </span>
+        <span class="nav-label">Top</span>
+      </a>
+      <a href="#about" aria-label="About">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M3 10.6L12 3l9 7.6"></path><path d="M5 9.9V21h14V9.9"></path></svg>
+        </span>
+        <span class="nav-label">About</span>
+      </a>
+      <a href="#focus" aria-label="Focus">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M3 12h3"></path><path d="M18 12h3"></path><path d="M12 3v3"></path><path d="M12 18v3"></path><circle cx="12" cy="12" r="4"></circle></svg>
+        </span>
+        <span class="nav-label">Focus</span>
+      </a>
+      <a href="#projects" aria-label="Projects">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+        </span>
+        <span class="nav-label">Projects</span>
+      </a>
+      <a href="#timeline" aria-label="Timeline">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M8 5V3"></path><path d="M16 5V3"></path><path d="M3 10h18"></path></svg>
+        </span>
+        <span class="nav-label">Timeline</span>
+      </a>
+      <a class="pill" href="#contact" aria-label="Contact">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"></path><path d="M4 7l8 6 8-6"></path></svg>
+        </span>
+        <span class="nav-label">Contact</span>
+      </a>
     </nav>
-    <button class="hamburger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
   </header>
 
-  <main>
-    <nav id="mobile-menu" class="mobile-menu" hidden>
-      <a href="#about">About</a>
-      <a href="#focus">Focus</a>
-      <a href="#projects">Projects</a>
-      <a href="#timeline">Timeline</a>
-      <a href="#contact">Contact</a>
-    </nav>
-
-    <section class="hero hero-centered">
-      <div class="hero-cloud" aria-hidden="true"></div>
-      <div class="portrait-stack">
-        <div class="portrait-frame">
-          <img src="./resources/images/profile_picture.jpeg" alt="Portrait of Marq Lott">
-        </div>
+  <aside class="floating-cta" aria-label="Quick actions">
+    <div class="floating-cta-actions">
+      <div class="floating-cta-links">
+        <a class="floating-cta-link" href="https://www.linkedin.com/in/marq-lott/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <span class="floating-cta-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"></rect><path d="M8 10v6"></path><path d="M8 8h.01"></path><path d="M12 16v-3.3a1.7 1.7 0 0 1 3.4 0V16"></path></svg>
+          </span>
+        </a>
+        <a class="floating-cta-link" href="https://github.com/Marqlo-C" target="_blank" rel="noopener" aria-label="GitHub">
+          <span class="floating-cta-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9 18c-4 1.2-4-2-6-2"></path><path d="M15 21v-3.1a3 3 0 0 0-.8-2.2c2.7-.3 5.5-1.3 5.5-5.8a4.6 4.6 0 0 0-1.2-3.1 4.2 4.2 0 0 0-.1-3.1s-1-.3-3.3 1.2a11.7 11.7 0 0 0-6 0C6.8 3.4 5.8 3.7 5.8 3.7a4.2 4.2 0 0 0-.1 3.1 4.6 4.6 0 0 0-1.2 3.1c0 4.5 2.8 5.5 5.5 5.8a3 3 0 0 0-.8 2.2V21"></path></svg>
+          </span>
+        </a>
+        <a class="floating-cta-link" href="mailto:marquiseclott@gmail.com" data-gmail-fallback="https://mail.google.com/mail/?view=cm&to=marquiseclott@gmail.com" aria-label="Email" title="Email">
+          <span class="floating-cta-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"></path><path d="m4 7 8 6 8-6"></path></svg>
+          </span>
+        </a>
+        <a class="floating-cta-link" href="sms:+12138170484" aria-label="Text" title="Text">
+          <span class="floating-cta-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3 1.5-4.2A4 4 0 0 1 3 15V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path><path d="M8 9h8"></path><path d="M8 13h5"></path></svg>
+          </span>
+        </a>
+        <button class="floating-cta-link floating-cta-btn" id="resume-btn-floating" type="button" aria-label="Resume">
+          <span class="floating-cta-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 3v12"></path><path d="M8 11l4 4 4-4"></path><path d="M4 19h16"></path></svg>
+          </span>
+        </button>
       </div>
+      <button class="floating-cta-tab" type="button" aria-label="Toggle quick actions" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
+      </button>
+    </div>
+  </aside>
 
+  <main>
+    <section class="hero">
       <div class="hero-text">
-        <p class="eyebrow fade-in">{We've probably never met before, so here goes}</p>
+        <p class="eyebrow fade-in">{We’ve probably never met before, so here goes}</p>
         <h1 class="typewriter-group">
           <span
             class="typewriter no-cursor"
@@ -71,7 +105,7 @@
             data-accelfactor="0.72"
             data-pause="0.7"
             data-startpause="1.0"
-          >hello world,</span>
+          >Hello Universe,</span>
           <span
             class="typewriter"
             data-accelerate="true"
@@ -79,30 +113,74 @@
             data-minspeed="50"
             data-accelfactor="0.55"
             data-pause="0.0"
-          >I'm <span class="highlight-name">Marq</span>.
+          >I’m <span class="highlight-name">Marq</span>.
           </span>
         </h1>
         <p class="lede">
-          Navy vet, ex-sales, now CS. I got here a different way and I’m okay with that.
+          Navy vet, ex-sales, <span class="now-anchor">now</span>
         </p>
-        <div class="contact-row">
-          <span class="chip contact-chip">Sacramento / Bay Area, CA</span>
-          <a class="chip contact-chip" href="tel:+12138170484">(213) 817-0484</a>
-          <a class="chip contact-chip" href="mailto:marquiseclott@gmail.com" data-gmail-fallback="https://mail.google.com/mail/?view=cm&to=marquiseclott@gmail.com">marquiseclott@gmail.com</a>
+        <p class="mobile-now-note">Navy vet, ex-sales, now Software Engineer. I got here a different way and I'm proud of it!</p>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-value">4+</span>
+            <span class="stat-label">Years CS</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">7+</span>
+            <span class="stat-label">Projects</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">10+</span>
+            <span class="stat-label">Years Industry</span>
+          </div>
         </div>
+        <div class="status-chip">Open to internships and new grad software roles • AI + Cloud & DevOps focus</div>
         <div class="cta-row">
-          <a class="btn primary" href="https://www.linkedin.com/in/marq-lott/" target="_blank" rel="noopener">LinkedIn</a>
-          <a class="btn ghost" href="https://github.com/Marqlo-C" target="_blank" rel="noopener">GitHub</a>
-          <button class="btn ghost" id="resume-btn" type="button">Resume</button>
+          <a class="btn primary" href="https://www.linkedin.com/in/marq-lott/" target="_blank" rel="noopener"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"></rect><path d="M8 10v6"></path><path d="M8 8h.01"></path><path d="M12 16v-3.3a1.7 1.7 0 0 1 3.4 0V16"></path></svg>LinkedIn</a>
+          <a class="btn ghost" href="https://github.com/Marqlo-C" target="_blank" rel="noopener"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18c-4 1.2-4-2-6-2"></path><path d="M15 21v-3.1a3 3 0 0 0-.8-2.2c2.7-.3 5.5-1.3 5.5-5.8a4.6 4.6 0 0 0-1.2-3.1 4.2 4.2 0 0 0-.1-3.1s-1-.3-3.3 1.2a11.7 11.7 0 0 0-6 0C6.8 3.4 5.8 3.7 5.8 3.7a4.2 4.2 0 0 0-.1 3.1 4.6 4.6 0 0 0-1.2 3.1c0 4.5 2.8 5.5 5.5 5.8a3 3 0 0 0-.8 2.2V21"></path></svg>GitHub</a>
+          <button class="btn ghost" id="resume-btn" type="button"><svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 11l4 4 4-4M4 19h16"/></svg>Resume</button>
         </div>
+        <div class="contact-row">
+          <span class="chip contact-chip"><span class="contact-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s-6.5-5.1-6.5-10a6.5 6.5 0 1 1 13 0c0 4.9-6.5 10-6.5 10z"></path><circle cx="12" cy="10.5" r="2.2"></circle></svg></span><span>Sacramento / Bay Area, CA</span></span>
+          <a class="chip contact-chip" href="mailto:marquiseclott@gmail.com" data-gmail-fallback="https://mail.google.com/mail/?view=cm&to=marquiseclott@gmail.com" aria-label="Email" title="Email">
+            <span class="contact-chip-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"></path><path d="m4 7 8 6 8-6"></path></svg>
+            </span>
+            <span>Email</span>
+          </a>
+          <a class="chip contact-chip" href="sms:+12138170484" aria-label="Text Marq at (213) 817-0484" title="Text">
+            <span class="contact-chip-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3 1.5-4.2A4 4 0 0 1 3 15V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path><path d="M8 9h8"></path><path d="M8 13h5"></path></svg>
+            </span>
+            <span>Text</span>
+          </a>
+        </div>
+      </div>
+
+      <svg class="hero-now-arrow" viewBox="0 0 100 100" aria-hidden="true">
+        <defs>
+          <marker id="hero-now-arrow-head" markerWidth="10" markerHeight="10" refX="8.9" refY="5" orient="auto" markerUnits="strokeWidth">
+            <path d="M0.9,1.1 L8.9,5 L0.9,8.9" transform="rotate(15 8.9 5)"></path>
+          </marker>
+        </defs>
+        <path class="hero-now-arrow-line" d=""></path>
+      </svg>
+
+      <div class="portrait-stack">
+        <div class="portrait-frame">
+          <img src="./resources/images/profile_picture.jpeg" alt="Portrait of Marq Lott">
+        </div>
+        <p class="hero-role">
+          <span class="hero-role-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"></path></svg>
+          </span>
+          <span>SOFTWARE ENGINEER</span>
+        </p>
       </div>
     </section>
 
-    <div class="status-wrapper">
-      <div class="status-chip">Open to internships and new grad software roles • AI + Cloud & DevOps focus</div>
-    </div>
-
     <section class="panel" id="about">
+
       <div class="panel-header">
         <div class="panel-title">About</div>
         <div class="panel-subtitle">Good software shouldn't only exist for edge cases.</div>
@@ -193,32 +271,44 @@
         <article class="card">
           <div class="card-title">Languages</div>
           <div class="chip-row">
-            <span class="chip">Python</span>
-            <span class="chip">JavaScript</span>
-            <span class="chip">TypeScript</span>
-            <span class="chip">C/C++</span>
-            <span class="chip">Java</span>
-            <span class="chip">SQL</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="" aria-hidden="true">Python</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="" aria-hidden="true">C++</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="" aria-hidden="true">C</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="" aria-hidden="true">TypeScript</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="" aria-hidden="true">JavaScript</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="" aria-hidden="true">SQL</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="" aria-hidden="true">Java</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="" aria-hidden="true">Golang</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/godot/godot-original.svg" alt="" aria-hidden="true">GDScript</span>
           </div>
         </article>
         <article class="card">
           <div class="card-title">Frameworks & Frontend</div>
           <div class="chip-row">
-            <span class="chip">React</span>
-            <span class="chip">Next.js</span>
-            <span class="chip">HTML/CSS</span>
-            <span class="chip">Canvas</span>
-            <span class="chip">Animations</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="" aria-hidden="true">React</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="" aria-hidden="true">Node.js</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="" aria-hidden="true">Next.js</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.simpleicons.org/django/44B78B" alt="" aria-hidden="true">Django</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="" aria-hidden="true">PyTorch</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="" aria-hidden="true">HTML/CSS</span>
           </div>
         </article>
         <article class="card">
           <div class="card-title">Tools & Platforms</div>
           <div class="chip-row">
-            <span class="chip">Git/GitHub</span>
-            <span class="chip">APIs/REST</span>
-            <span class="chip">Maps/Geo</span>
-            <span class="chip">AI tooling</span>
-            <span class="chip">Testing</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="" aria-hidden="true">Git/GitHub</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="" aria-hidden="true">Docker</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" alt="" aria-hidden="true">APIs/REST</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jest/jest-plain.svg" alt="" aria-hidden="true">Testing</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.simpleicons.org/gnu" alt="" aria-hidden="true">GNU Make \ <img class="chip-icon" src="https://cdn.simpleicons.org/meson" alt="" aria-hidden="true">Meson</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.simpleicons.org/gnubash/9AD5D6" alt="" aria-hidden="true">SSH</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.simpleicons.org/tailscale/9AD5D6" alt="" aria-hidden="true">Tailscale</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="" aria-hidden="true">MongoDB</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg" alt="" aria-hidden="true">Vercel</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.simpleicons.org/githubcopilot/9AD5D6" alt="" aria-hidden="true">GitHub Copilot</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.simpleicons.org/anthropic/D97757" alt="" aria-hidden="true">Claude CLI</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecolab/googlecolab-original.svg" alt="" aria-hidden="true">Google Colab</span>
+            <span class="chip"><img class="chip-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/godot/godot-original.svg" alt="" aria-hidden="true">Godot</span>
           </div>
         </article>
       </div>
@@ -241,15 +331,30 @@
         <article class="card">
           <div class="card-title">Stay in touch</div>
           <p>Email me for opportunities, collaborations, or to talk creative tech.</p>
-          <div class="chip-row">
-            <a class="chip" href="mailto:marquiseclott@gmail.com" data-gmail-fallback="https://mail.google.com/mail/?view=cm&to=marquiseclott@gmail.com">marquiseclott@gmail.com</a>
-            <span class="chip">Open to new grad roles</span>
+          <div class="chip-row contact-bottom-row">
+            <a class="chip contact-method-chip" href="mailto:marquiseclott@gmail.com" data-gmail-fallback="https://mail.google.com/mail/?view=cm&to=marquiseclott@gmail.com" aria-label="Email marquiseclott@gmail.com" title="Email">
+              <span class="contact-chip-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"></path><path d="m4 7 8 6 8-6"></path></svg>
+              </span>
+              <span class="contact-method-text">
+                <span class="contact-method-label">Email</span>
+                <span class="contact-method-value">marquiseclott@gmail.com</span>
+              </span>
+            </a>
+            <a class="chip contact-text-chip" href="sms:+12138170484" aria-label="Text Marq" title="Text">
+              <span class="contact-chip-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3 1.5-4.2A4 4 0 0 1 3 15V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path><path d="M8 9h8"></path><path d="M8 13h5"></path></svg>
+              </span>
+              <span>Text</span>
+            </a>
+            <span class="chip contact-open-chip">Open to new grad roles</span>
           </div>
         </article>
         <article class="card links">
-          <a class="btn primary" href="https://www.linkedin.com/in/marq-lott/" target="_blank" rel="noopener">LinkedIn</a>
-          <a class="btn ghost" href="https://github.com/Marqlo-C" target="_blank" rel="noopener">GitHub</a>
-          <button class="btn ghost" type="button" id="resume-btn-contact">Resume</button>
+          <div class="card-title">Socials</div>
+          <a class="btn primary" href="https://www.linkedin.com/in/marq-lott/" target="_blank" rel="noopener"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"></rect><path d="M8 10v6"></path><path d="M8 8h.01"></path><path d="M12 16v-3.3a1.7 1.7 0 0 1 3.4 0V16"></path></svg>LinkedIn</a>
+          <a class="btn ghost" href="https://github.com/Marqlo-C" target="_blank" rel="noopener"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18c-4 1.2-4-2-6-2"></path><path d="M15 21v-3.1a3 3 0 0 0-.8-2.2c2.7-.3 5.5-1.3 5.5-5.8a4.6 4.6 0 0 0-1.2-3.1 4.2 4.2 0 0 0-.1-3.1s-1-.3-3.3 1.2a11.7 11.7 0 0 0-6 0C6.8 3.4 5.8 3.7 5.8 3.7a4.2 4.2 0 0 0-.1 3.1 4.6 4.6 0 0 0-1.2 3.1c0 4.5 2.8 5.5 5.5 5.8a3 3 0 0 0-.8 2.2V21"></path></svg>GitHub</a>
+          <button class="btn ghost" type="button" id="resume-btn-contact"><svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 11l4 4 4-4M4 19h16"/></svg>Resume</button>
         </article>
       </div>
     </section>

@@ -3,7 +3,8 @@ const projects = [
     title: "Toes Down — Multiplayer Study Game",
     summary: "Built a responsive React/Next.js experience for a collaborative study game with the Google Developer Student Club.",
     tags: ["React", "Next.js", "Team Project"],
-    link: "https://github.com/Marqlo-C/Toes-Down"
+    link: "https://github.com/Marqlo-C/Toes-Down",
+    liveLink: "https://toesdown.vercel.app/"
   },
   {
     title: "Embergency — Wildfire Response Web App",
@@ -90,11 +91,16 @@ function renderProjects() {
   projects.forEach((project) => {
     const card = document.createElement("article");
     card.className = "card project-card";
+    const starIcon = `<span class="project-link-icon project-link-icon-star" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.8 6.4 6.7 2.4-6.7 2.4L12 20.1l-2.8-6.4-6.7-2.4 6.7-2.4z"></path></svg></span>`;
+    const links = [
+      project.liveLink ? `<a class="link" href="${project.liveLink}" target="_blank" rel="noopener"><span>Live site ↗</span></a>` : '',
+      project.link ? `<a class="link" href="${project.link}" target="_blank" rel="noopener"><span>View project</span>${starIcon}</a>` : ''
+    ].filter(Boolean).join('');
     card.innerHTML = `
       <div class="card-title">${project.title}</div>
       <p>${project.summary}</p>
       <div class="chip-row">${project.tags.map((tag) => `<span class="chip">${tag}</span>`).join("")}</div>
-      ${project.link ? `<a class="link" href="${project.link}" target="_blank" rel="noopener">View project →</a>` : ''}
+      ${links}
     `;
     projectGrid.appendChild(card);
   });
@@ -119,6 +125,218 @@ function renderTimeline() {
 renderProjects();
 renderTimeline();
 
+// Draws a responsive hand-drawn arrow from the "now" text to the role badge.
+(() => {
+  const hero = document.querySelector('.hero');
+  const startEl = document.querySelector('.now-anchor');
+  const endEl = document.querySelector('.hero-role');
+  const statusChip = document.querySelector('.status-chip');
+  const arrowSvg = document.querySelector('.hero-now-arrow');
+  const arrowPath = arrowSvg ? arrowSvg.querySelector('.hero-now-arrow-line') : null;
+  if (!hero || !startEl || !endEl || !arrowSvg || !arrowPath) return;
+
+  let arrowReady = false;
+
+  const updateArrow = () => {
+    const heroRect = hero.getBoundingClientRect();
+    const startRect = startEl.getBoundingClientRect();
+    const endRect = endEl.getBoundingClientRect();
+
+    const startNudge = Math.max(12, startRect.width * 0.2);
+    const sx = startRect.right - heroRect.left + startNudge;
+    const sy = startRect.top - heroRect.top + startRect.height * 0.82 - 5;
+    const endpointStep = endRect.height * 0.10;
+    const ex = endRect.left - heroRect.left - 14 + endpointStep * 2;
+    const ey = endRect.top - heroRect.top + endRect.height * 0.24;
+
+    const dx = ex - sx;
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+    let bendX = sx + dx * 0.74;
+
+    if (statusChip) {
+      const chipRect = statusChip.getBoundingClientRect();
+      const chipRight = chipRect.right - heroRect.left;
+
+      // Keep the horizontal drift until just after the chip ends.
+      bendX = clamp(chipRight + 40, sx + dx * 0.64, ex - 64);
+    }
+
+    // Quarter-oval style: stay flatter longer, then bend down near the end.
+    const c1x = bendX;
+    const c1y = sy + 2;
+    const c2x = ex - 58;
+    const c2y = ey - 22;
+    const d = `M ${sx} ${sy} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${ex} ${ey}`;
+
+    arrowSvg.setAttribute('viewBox', `0 0 ${Math.max(1, heroRect.width)} ${Math.max(1, heroRect.height)}`);
+    arrowPath.setAttribute('d', d);
+    arrowPath.setAttribute('marker-end', 'url(#hero-now-arrow-head)');
+  };
+
+  const activateArrow = () => {
+    if (arrowReady) return;
+    arrowReady = true;
+    arrowSvg.classList.add('ready');
+    updateArrow();
+
+    window.addEventListener('resize', updateArrow);
+    window.addEventListener('scroll', updateArrow, { passive: true });
+    window.addEventListener('load', updateArrow);
+
+    // Recompute once webfonts settle so the start point stays attached to "now".
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(updateArrow).catch(() => {});
+    }
+  };
+
+  document.addEventListener('heroTypewriterDone', activateArrow, { once: true });
+
+  // Fallback in case the typewriter effect is disabled.
+  window.addEventListener('load', () => {
+    if (!arrowReady) activateArrow();
+  }, { once: true });
+})();
+
+// Keeps section jumps aligned with the floating header by using a dynamic offset.
+(() => {
+  const header = document.querySelector('.site-header');
+  const navLinks = document.querySelectorAll('.nav a[href^="#"]');
+  if (!header || navLinks.length === 0) return;
+
+  const getOffset = () => {
+    const rect = header.getBoundingClientRect();
+    const breathingRoom = window.matchMedia('(max-width: 720px)').matches ? 32 : 20;
+    return rect.bottom + breathingRoom;
+  };
+
+  navLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const targetId = link.getAttribute('href');
+      if (!targetId) return;
+
+      if (link.classList.contains('nav-top')) {
+        event.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        history.replaceState(null, '', '#top');
+        return;
+      }
+
+      const target = document.querySelector(targetId);
+      if (!target) return;
+
+      event.preventDefault();
+
+      const top = target.getBoundingClientRect().top + window.scrollY - getOffset();
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+      history.replaceState(null, '', targetId);
+    });
+  });
+})();
+
+// Adds a subtle tightened state to the floating header once the page is scrolled.
+(() => {
+  const header = document.querySelector('.site-header');
+  if (!header) return;
+
+  const updateHeaderState = () => {
+    header.classList.toggle('scrolled', window.scrollY > 12);
+  };
+
+  updateHeaderState();
+  window.addEventListener('scroll', updateHeaderState, { passive: true });
+})();
+
+// Shows desktop quick actions after the hero CTA row has been scrolled past.
+(() => {
+  const floatingMenu = document.querySelector('.floating-cta');
+  const floatingTab = floatingMenu ? floatingMenu.querySelector('.floating-cta-tab') : null;
+  const floatingLinks = floatingMenu ? floatingMenu.querySelectorAll('.floating-cta-link') : [];
+  const heroCtaRow = document.querySelector('.hero .cta-row');
+  const header = document.querySelector('.site-header');
+  const mobileQuery = window.matchMedia('(max-width: 960px)');
+  if (!floatingMenu || !heroCtaRow || !header) return;
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  const setTabState = (isOpen) => {
+    if (!floatingTab) return;
+    floatingTab.setAttribute('aria-expanded', String(isOpen));
+  };
+
+  const updateVisibility = () => {
+    const triggerBottom = heroCtaRow.getBoundingClientRect().bottom + window.scrollY;
+    const headerBottom = header.getBoundingClientRect().bottom;
+    const passedHeroCta = window.scrollY + headerBottom > triggerBottom + 6;
+    floatingMenu.classList.toggle('visible', passedHeroCta);
+    if (!passedHeroCta) {
+      floatingMenu.classList.remove('open');
+      setTabState(false);
+    }
+  };
+
+  if (floatingTab) {
+    floatingTab.addEventListener('click', () => {
+      if (!mobileQuery.matches) return;
+      const isOpen = !floatingMenu.classList.contains('open');
+      floatingMenu.classList.toggle('open', isOpen);
+      setTabState(isOpen);
+    });
+  }
+
+  floatingLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      if (!mobileQuery.matches) return;
+      floatingMenu.classList.remove('open');
+      setTabState(false);
+    });
+  });
+
+  updateVisibility();
+
+  window.addEventListener('touchstart', (event) => {
+    if (!mobileQuery.matches || !floatingMenu.classList.contains('visible')) return;
+    const touch = event.changedTouches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+  }, { passive: true });
+
+  window.addEventListener('touchend', (event) => {
+    if (!mobileQuery.matches || !floatingMenu.classList.contains('visible')) return;
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - touchStartX;
+    const deltaY = touch.clientY - touchStartY;
+    const horizontalSwipe = Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.3;
+    if (!horizontalSwipe) return;
+
+    const isOpen = floatingMenu.classList.contains('open');
+
+    // Swipe left to close when drawer is open.
+    if (isOpen && deltaX < -40) {
+      floatingMenu.classList.remove('open');
+      setTabState(false);
+      return;
+    }
+
+    // Swipe right from the edge strip to open when drawer is closed.
+    const nearRightEdge = touchStartX > window.innerWidth - 34;
+    if (!isOpen && deltaX > 40 && nearRightEdge) {
+      floatingMenu.classList.add('open');
+      setTabState(true);
+    }
+  }, { passive: true });
+
+  window.addEventListener('scroll', updateVisibility, { passive: true });
+  window.addEventListener('resize', () => {
+    if (!mobileQuery.matches) {
+      floatingMenu.classList.remove('open');
+      setTabState(false);
+    }
+    updateVisibility();
+  });
+})();
+
 // If the user doesn't have a mail client set up, fall back to Gmail compose in a new tab.
 document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   link.addEventListener('click', () => {
@@ -136,6 +354,7 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
 (() => {
   const modal = document.getElementById('resume-modal');
   const openBtn = document.getElementById('resume-btn');
+  const floatingOpenBtn = document.getElementById('resume-btn-floating');
   const closeBtn = modal.querySelector('.resume-close');
   const backdrop = modal.querySelector('.resume-modal-backdrop');
 
@@ -143,6 +362,7 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   const close = () => { modal.hidden = true; document.body.style.overflow = ''; };
 
   openBtn.addEventListener('click', open);
+  if (floatingOpenBtn) floatingOpenBtn.addEventListener('click', open);
   document.getElementById('resume-btn-contact').addEventListener('click', open);
   closeBtn.addEventListener('click', close);
   backdrop.addEventListener('click', close);
@@ -151,7 +371,7 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
 
 // Highlights the nav link that corresponds to the section currently in view.
 (() => {
-  const navLinks = document.querySelectorAll('.nav a[href^="#"]');
+  const navLinks = document.querySelectorAll('.nav a[href^="#"]:not(.nav-top)');
   const sections = Array.from(navLinks)
     .map(link => document.querySelector(link.getAttribute('href')))
     .filter(Boolean);
@@ -188,11 +408,11 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-      } else if (entry.boundingClientRect.top > 0) {
+      } else {
         entry.target.classList.remove('visible');
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.2, rootMargin: '-10% 0px -10% 0px' });
 
   document.querySelectorAll('.panel').forEach((el) => {
     el.classList.add('reveal');
@@ -214,28 +434,27 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   }
 })();
 
-// Parallax exit for the hero - each layer drifts and fades at a different rate as you scroll.
+// Parallax exit for the hero - portrait and text drift at different rates as you scroll.
 (() => {
-  const cloud       = document.querySelector('.hero-cloud');
-  const portrait    = document.querySelector('.portrait-stack');
-  const heroText    = document.querySelector('.hero-text');
-  if (!cloud || !portrait || !heroText) return;
+  const portrait  = document.querySelector('.portrait-stack');
+  const heroText  = document.querySelector('.hero-text');
+  if (!portrait || !heroText) return;
 
   function onScroll() {
     const heroEl = document.querySelector('.hero');
     const heroH  = heroEl ? heroEl.offsetHeight : window.innerHeight;
     const y      = window.scrollY;
-    const p      = Math.min(y / (heroH * 0.75), 1);
+    const p      = Math.min(y / (heroH * 0.7), 1);
+    const fadeProgress = Math.min(y / (heroH * 0.7), 1);
 
-    cloud.style.opacity   = Math.max(0, 1 - p * 2.0);
-    cloud.style.transform = `translateY(${-p * 20}px)`;
+    portrait.style.transform = `translateY(${-p * 46}px)`;
+    portrait.style.opacity   = Math.max(0, 1 - fadeProgress);
 
-    portrait.style.transform = `translateY(${-p * 30}px)`;
-
-    heroText.style.opacity   = Math.max(0, 1 - p * 1.0);
-    heroText.style.transform = `translateY(${-p * 50}px)`;
+    heroText.style.opacity   = 1;
+    heroText.style.transform = `translateY(${-p * 38}px)`;
   }
 
+  onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 })();
 
@@ -363,6 +582,8 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
 (() => {
   const typewriters = Array.from(document.querySelectorAll(".typewriter"));
   const defaultDuration = 2;
+  const typeSpeedFactor = 0.85;
+  const delayScale = 1 / typeSpeedFactor;
   let cumulativeDelay = 0;
   let lastCursorEl = null;
 
@@ -381,7 +602,13 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
 
   const typeNext = () => {
     const el = typeQueue.shift();
-    if (!el) return;
+    if (!el) {
+      document.dispatchEvent(new CustomEvent('heroTypewriterDone'));
+      return;
+    }
+
+    const hasHighlightedName = Boolean(el.querySelector('.highlight-name'));
+    const lineDelayMultiplier = hasHighlightedName ? 1.35 : 1;
 
     const originalHTML = el.innerHTML;
     const text = (el.textContent || "").trim();
@@ -391,8 +618,8 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
     const accelerate = el.dataset.accelerate === "true";
 
     if (accelerate) {
-      const base = Number(el.dataset.speed) || 140;
-      const min = Number(el.dataset.minspeed) || 80;
+      const base = (Number(el.dataset.speed) || 140) * delayScale * lineDelayMultiplier;
+      const min = (Number(el.dataset.minspeed) || 80) * delayScale * lineDelayMultiplier;
       const factor = Number(el.dataset.accelfactor) || 0.9;
       const pauseMs = pause * 1000;
 
@@ -439,7 +666,7 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
 
       setTimeout(tick, startPause * 1000);
     } else {
-      const duration = Number(el.dataset.duration) || defaultDuration;
+      const duration = (Number(el.dataset.duration) || defaultDuration) * delayScale * lineDelayMultiplier;
       el.style.setProperty("--chars", chars);
       el.style.setProperty("--typing-duration", `${duration}s`);
       el.style.setProperty("--typing-delay", `${cumulativeDelay}s`);
@@ -462,27 +689,3 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   typeNext();
 })();
 
-// Mobile hamburger menu toggle.
-(() => {
-  const button = document.querySelector(".hamburger");
-  const menu = document.getElementById("mobile-menu");
-  if (!button || !menu) return;
-
-  const toggle = () => {
-    const isOpen = button.getAttribute("aria-expanded") === "true";
-    button.setAttribute("aria-expanded", String(!isOpen));
-    menu.hidden = isOpen;
-    menu.style.display = isOpen ? "none" : "block";
-  };
-
-  button.addEventListener("click", toggle);
-
-  // Close on nav click
-  menu.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      button.setAttribute("aria-expanded", "false");
-      menu.hidden = true;
-      menu.style.display = "none";
-    });
-  });
-})();
