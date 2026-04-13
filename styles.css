@@ -408,6 +408,9 @@ section[id] { scroll-margin-top: 100px; }
   align-items: flex-start;
   gap: 0;
   min-height: 2.3em;
+  max-width: 90vw;
+  width: 100%;
+  overflow: hidden;
 }
 
 .highlight-name {
@@ -1363,6 +1366,11 @@ span.chip-icon svg {
     justify-content: space-between;
     gap: 12px;
     padding: 16px 0;
+  }
+
+  .reveal {
+    transform: translateY(18px) scale(0.99);
+    transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), filter 0.85s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .stat { flex: 1 1 0; }

@@ -204,6 +204,24 @@ renderTimeline();
   const navLinks = document.querySelectorAll('.nav a[href^="#"]');
   if (!header || navLinks.length === 0) return;
 
+  const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const smoothScrollTo = (targetTop) => {
+    const startTop = window.scrollY;
+    const distance = targetTop - startTop;
+    const isMobile = window.matchMedia('(max-width: 720px)').matches;
+    const duration = isMobile ? 920 : 620;
+    const startTs = performance.now();
+
+    const step = (ts) => {
+      const progress = Math.min(1, (ts - startTs) / duration);
+      const eased = easeInOutCubic(progress);
+      window.scrollTo(0, startTop + distance * eased);
+      if (progress < 1) requestAnimationFrame(step);
+    };
+
+    requestAnimationFrame(step);
+  };
+
   const getOffset = () => {
     const rect = header.getBoundingClientRect();
     const breathingRoom = window.matchMedia('(max-width: 720px)').matches ? 32 : 20;
@@ -217,7 +235,7 @@ renderTimeline();
 
       if (link.classList.contains('nav-top')) {
         event.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        smoothScrollTo(0);
         history.replaceState(null, '', '#top');
         return;
       }
@@ -228,7 +246,7 @@ renderTimeline();
       event.preventDefault();
 
       const top = target.getBoundingClientRect().top + window.scrollY - getOffset();
-      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+      smoothScrollTo(Math.max(0, top));
       history.replaceState(null, '', targetId);
     });
   });
@@ -404,15 +422,16 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
 
 // Fades panels and cards in as they scroll into view; reverses on scroll up.
 (() => {
+  const isMobile = window.matchMedia('(max-width: 720px)').matches;
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-      } else {
+      } else if (!isMobile) {
         entry.target.classList.remove('visible');
       }
     });
-  }, { threshold: 0.2, rootMargin: '-10% 0px -10% 0px' });
+  }, { threshold: isMobile ? 0.12 : 0.2, rootMargin: isMobile ? '-4% 0px -20% 0px' : '-10% 0px -10% 0px' });
 
   document.querySelectorAll('.panel').forEach((el) => {
     el.classList.add('reveal');
@@ -440,18 +459,21 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   const heroText  = document.querySelector('.hero-text');
   if (!portrait || !heroText) return;
 
+  const mobileParallax = window.matchMedia('(max-width: 720px)').matches;
+
   function onScroll() {
     const heroEl = document.querySelector('.hero');
     const heroH  = heroEl ? heroEl.offsetHeight : window.innerHeight;
     const y      = window.scrollY;
-    const p      = Math.min(y / (heroH * 0.7), 1);
-    const fadeProgress = Math.min(y / (heroH * 0.7), 1);
+    const divisor = mobileParallax ? heroH * 1.1 : heroH * 0.7;
+    const p      = Math.min(y / divisor, 1);
+    const fadeProgress = Math.min(y / divisor, 1);
 
-    portrait.style.transform = `translateY(${-p * 46}px)`;
+    portrait.style.transform = `translateY(${-p * (mobileParallax ? 20 : 46)}px)`;
     portrait.style.opacity   = Math.max(0, 1 - fadeProgress);
 
     heroText.style.opacity   = 1;
-    heroText.style.transform = `translateY(${-p * 38}px)`;
+    heroText.style.transform = `translateY(${-p * (mobileParallax ? 16 : 38)}px)`;
   }
 
   onScroll();
@@ -618,6 +640,8 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
     const accelerate = el.dataset.accelerate === "true";
 
     if (accelerate) {
+      const lockMobileLine = window.matchMedia('(max-width: 720px)').matches && el.classList.contains('no-cursor');
+      const lockedWidth = lockMobileLine ? Math.ceil(el.getBoundingClientRect().width) : 0;
       const base = (Number(el.dataset.speed) || 140) * delayScale * lineDelayMultiplier;
       const min = (Number(el.dataset.minspeed) || 80) * delayScale * lineDelayMultiplier;
       const factor = Number(el.dataset.accelfactor) || 0.9;
@@ -625,7 +649,11 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
 
       el.textContent = "";
       el.style.whiteSpace = "nowrap";
-      el.style.maxWidth = "none";
+      el.style.maxWidth = lockMobileLine && lockedWidth ? `${lockedWidth}px` : "none";
+      if (lockMobileLine && lockedWidth) {
+        el.style.width = `${lockedWidth}px`;
+        el.style.minWidth = `${lockedWidth}px`;
+      }
 
         if (lastCursorEl && lastCursorEl !== el) {
           lastCursorEl.style.borderRightWidth = "0";
@@ -653,8 +681,8 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
           setTimeout(tick, Math.max(min, current + jitter));
         } else {
           el.innerHTML = originalHTML;
-          el.style.whiteSpace = "normal";
-          el.style.maxWidth = "none";
+          el.style.whiteSpace = lockMobileLine ? "nowrap" : "normal";
+          el.style.maxWidth = lockMobileLine && lockedWidth ? `${lockedWidth}px` : "none";
           el.style.borderRightWidth = "3px";
           el.style.animation = `blink ${blink.trim()} step-end infinite`;
 
