@@ -1476,14 +1476,14 @@ span.chip-icon svg {
 
 @media (min-width: 961px) and (max-width: 1199px) {
   main {
-    padding: calc(var(--hero-offset-desktop) - 8px) clamp(18px, 4vw, 48px) 72px;
-    gap: 28px;
-    max-width: 1180px;
+    padding: calc(var(--hero-offset-desktop) - 10px) clamp(16px, 2.4vw, 34px) 72px;
+    gap: 24px;
+    max-width: 1240px;
   }
 
   .hero {
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 32px;
+    grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
+    gap: 18px;
     min-height: initial;
     padding: 12px 0 18px;
     align-items: start;
@@ -1491,6 +1491,7 @@ span.chip-icon svg {
 
   .hero-text {
     gap: 12px;
+    max-width: 540px;
   }
 
   .hero-text h1 {
@@ -1506,16 +1507,18 @@ span.chip-icon svg {
   .portrait-stack {
     gap: 12px;
     align-self: start;
+    justify-self: end;
+    margin-right: -8px;
   }
 
   .portrait-frame {
-    width: clamp(250px, 26vw, 320px);
-    height: clamp(300px, 31vw, 390px);
+    width: clamp(290px, 30vw, 360px);
+    height: clamp(350px, 37vw, 440px);
   }
 
   .hero-role {
     font-size: 14px;
-    padding: 7px 14px;
+    padding: 7px 16px;
     letter-spacing: 2.4px;
   }
 
