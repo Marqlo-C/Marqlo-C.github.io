@@ -478,6 +478,17 @@ section[id] { scroll-margin-top: 100px; }
   margin: 0;
 }
 
+.lede-delayed {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 1650ms cubic-bezier(0.22, 1, 0.36, 1), transform 1650ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lede-delayed.ready {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* hero stats row */
 .hero-stats {
   display: flex;

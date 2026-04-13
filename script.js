@@ -131,6 +131,7 @@ renderTimeline();
   const startEl = document.querySelector('.now-anchor');
   const endEl = document.querySelector('.hero-role');
   const statusChip = document.querySelector('.status-chip');
+  const ledeEl = document.querySelector('.lede-delayed');
   const arrowSvg = document.querySelector('.hero-now-arrow');
   const arrowPath = arrowSvg ? arrowSvg.querySelector('.hero-now-arrow-line') : null;
   if (!hero || !startEl || !endEl || !arrowSvg || !arrowPath) return;
@@ -177,8 +178,25 @@ renderTimeline();
   const activateArrow = () => {
     if (arrowReady) return;
     arrowReady = true;
-    arrowSvg.classList.add('ready');
+
+    if (ledeEl) {
+      const isTablet = window.matchMedia('(min-width: 721px) and (max-width: 1199px)').matches;
+      const ledeDelayMs = isTablet ? 125 : 100;
+      setTimeout(() => {
+        ledeEl.classList.add('ready');
+      }, ledeDelayMs);
+    }
+
     updateArrow();
+
+    // On tablets, wait longer for text wrapping to fully settle
+    const isTablet = window.matchMedia('(min-width: 721px) and (max-width: 1199px)').matches;
+    const delayMs = isTablet ? 600 : 400;
+
+    setTimeout(() => {
+      arrowSvg.classList.add('ready');
+      updateArrow();
+    }, delayMs);
 
     window.addEventListener('resize', updateArrow);
     window.addEventListener('scroll', updateArrow, { passive: true });
@@ -191,11 +209,6 @@ renderTimeline();
   };
 
   document.addEventListener('heroTypewriterDone', activateArrow, { once: true });
-
-  // Fallback in case the typewriter effect is disabled.
-  window.addEventListener('load', () => {
-    if (!arrowReady) activateArrow();
-  }, { once: true });
 })();
 
 // Keeps section jumps aligned with the floating header by using a dynamic offset.
@@ -724,6 +737,11 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
         el.style.whiteSpace = "normal";
         el.style.maxWidth = "none";
         el.removeEventListener("animationend", onEnd);
+        
+        const pause = Number(el.dataset.pause) || 0;
+        setTimeout(() => {
+          typeNext();
+        }, pause * 1000);
       };
       el.addEventListener("animationend", onEnd);
     }
