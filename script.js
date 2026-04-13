@@ -105,7 +105,7 @@ function renderProjects() {
     card.innerHTML = `
       <div class="card-title">${project.title}</div>
       <p>${project.summary}</p>
-      <div class="chip-row">${project.tags.map((tag) => `<span class="chip">${tag}</span>`).join("")}</div>
+      <div class="chip-row">${project.tags.map((tag) => `<span class="chip chip-token">${tag}</span>`).join("")}</div>
       ${links}
     `;
     projectGrid.appendChild(card);
@@ -526,19 +526,45 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
 (() => {
   const canvas = document.getElementById('starfield');
   if (!canvas) return;
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
+  if (!ctx) return;
+
+  const isTabletOrSmaller = window.matchMedia('(max-width: 1199px)').matches;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const targetFps = prefersReducedMotion ? 24 : (isTabletOrSmaller ? 30 : 45);
+  const frameInterval = 1000 / targetFps;
+
   let W, H, stars = [], shooters = [];
-  let lastTs = 0, nextShot = 1500 + Math.random() * 2000;
+  let lastTs = 0;
+  let lastFrameRender = 0;
+  let rafId = 0;
+  let running = false;
+  let nextShot = 1500 + Math.random() * 2000;
 
   const beemo = new Image();
   beemo.src = './resources/images/beemo easter egg.png';
+  beemo.decoding = 'async';
 
   const serverBeemo = new Image();
   serverBeemo.src = './resources/images/server rack beemo easter.png';
+  serverBeemo.decoding = 'async';
 
   function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
+    W = window.innerWidth;
+    H = window.innerHeight;
+
+    // Cap DPR to keep the background canvas from over-consuming GPU/CPU time.
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    canvas.width = Math.floor(W * dpr);
+    canvas.height = Math.floor(H * dpr);
+    canvas.style.width = `${W}px`;
+    canvas.style.height = `${H}px`;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const area = W * H;
+    const densityDivisor = isTabletOrSmaller ? 18000 : 14000;
+    const count = Math.max(70, Math.min(190, Math.round(area / densityDivisor)));
+    stars = Array.from({ length: count }, makeStar);
   }
 
   function makeStar() {
@@ -628,18 +654,51 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
       }
     }
 
-    if (nextShot <= 0) {
+    if (!prefersReducedMotion && nextShot <= 0) {
       spawnShooter();
       nextShot = 2000 + Math.random() * 4000;
     }
+  }
 
-    requestAnimationFrame(draw);
+  function tick(ts) {
+    if (!running) return;
+    rafId = requestAnimationFrame(tick);
+
+    if (ts - lastFrameRender < frameInterval) return;
+    lastFrameRender = ts;
+    draw(ts);
+  }
+
+  function start() {
+    if (running) return;
+    running = true;
+    lastTs = performance.now();
+    lastFrameRender = 0;
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function stop() {
+    running = false;
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = 0;
+    }
   }
 
   window.addEventListener('resize', resize);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stop();
+    else start();
+  });
+
   resize();
-  stars = Array.from({ length: 200 }, makeStar);
-  requestAnimationFrame(draw);
+
+  if (prefersReducedMotion) {
+    draw(performance.now());
+    return;
+  }
+
+  start();
 })();
 
 // Typewriter effect - types each .typewriter element in sequence, accelerating per character with a bit of jitter.

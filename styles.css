@@ -840,6 +840,12 @@ section[id] { scroll-margin-top: 100px; }
   color: var(--muted);
 }
 
+.chip-token {
+  color: #57c2ff;
+  text-shadow: 0 0 10px rgba(87, 194, 255, 0.22);
+  font-weight: 600;
+}
+
 .chip-icon {
   width: 12px;
   height: 12px;
