@@ -477,6 +477,14 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   });
 
   const observeCards = () => {
+    if (isMobileOrTablet) {
+      document.querySelectorAll('.card, .timeline-item').forEach((el) => {
+        el.classList.add('reveal', 'visible');
+        el.style.transitionDelay = '0ms';
+      });
+      return;
+    }
+
     document.querySelectorAll('.card, .timeline-item').forEach((el, i) => {
       el.classList.add('reveal');
       el.style.transitionDelay = `${(i % (isMobileOrTablet ? 3 : 4)) * (isMobileOrTablet ? 55 : 80)}ms`;
@@ -545,6 +553,9 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   const heroText  = document.querySelector('.hero-text');
   if (!portrait || !heroText) return;
 
+  const isTabletOrSmaller = window.matchMedia('(max-width: 1199px)').matches;
+  if (isTabletOrSmaller) return;
+
   const mobileParallax = window.matchMedia('(max-width: 720px)').matches;
 
   function onScroll() {
@@ -575,7 +586,7 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
 
   const isTabletOrSmaller = window.matchMedia('(max-width: 1199px)').matches;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const targetFps = prefersReducedMotion ? 24 : (isTabletOrSmaller ? 30 : 45);
+  const targetFps = prefersReducedMotion ? 24 : (isTabletOrSmaller ? 24 : 45);
   const frameInterval = 1000 / targetFps;
 
   let W, H, stars = [], shooters = [];
@@ -583,14 +594,17 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   let lastFrameRender = 0;
   let rafId = 0;
   let running = false;
+  let scrollingUntil = 0;
   let nextShot = 1500 + Math.random() * 2000;
 
+  const imageUrl = (fileName) => new URL(`./resources/images/${fileName}`, window.location.href).toString();
+
   const beemo = new Image();
-  beemo.src = './resources/images/beemo easter egg.png';
+  beemo.src = imageUrl('Beemo Easter Egg.png');
   beemo.decoding = 'async';
 
   const serverBeemo = new Image();
-  serverBeemo.src = './resources/images/server rack beemo easter.png';
+  serverBeemo.src = imageUrl('server rack beemo easter.png');
   serverBeemo.decoding = 'async';
 
   function resize() {
@@ -606,7 +620,7 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     const area = W * H;
-    const densityDivisor = isTabletOrSmaller ? 18000 : 14000;
+    const densityDivisor = isTabletOrSmaller ? 23000 : 14000;
     const count = Math.max(70, Math.min(190, Math.round(area / densityDivisor)));
     stars = Array.from({ length: count }, makeStar);
   }
@@ -708,6 +722,7 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
     if (!running) return;
     rafId = requestAnimationFrame(tick);
 
+    if (isTabletOrSmaller && ts < scrollingUntil) return;
     if (ts - lastFrameRender < frameInterval) return;
     lastFrameRender = ts;
     draw(ts);
@@ -730,6 +745,14 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   }
 
   window.addEventListener('resize', resize);
+  if (isTabletOrSmaller) {
+    const markScrolling = () => {
+      scrollingUntil = performance.now() + 120;
+    };
+    window.addEventListener('scroll', markScrolling, { passive: true });
+    window.addEventListener('touchmove', markScrolling, { passive: true });
+    window.addEventListener('wheel', markScrolling, { passive: true });
+  }
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) stop();
     else start();
