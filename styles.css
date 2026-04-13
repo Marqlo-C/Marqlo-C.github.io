@@ -1463,6 +1463,10 @@ span.chip-icon svg {
   }
 
   .typewriter-group { align-items: center; }
+  
+  .hero-text {
+    max-width: 85vw;
+  }
 
   .typewriter {
     align-self: center;
@@ -1476,14 +1480,14 @@ span.chip-icon svg {
 
 @media (min-width: 961px) and (max-width: 1199px) {
   main {
-    padding: calc(var(--hero-offset-desktop) - 10px) clamp(16px, 2.4vw, 34px) 72px;
+    padding: calc(var(--hero-offset-desktop) - 10px) clamp(24px, 3.6vw, 51px) 72px;
     gap: 24px;
     max-width: 1240px;
   }
 
   .hero {
-    grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
-    gap: 18px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 12px;
     min-height: initial;
     padding: 12px 0 18px;
     align-items: start;
@@ -1491,7 +1495,8 @@ span.chip-icon svg {
 
   .hero-text {
     gap: 12px;
-    max-width: 540px;
+    width: 100%;
+    max-width: 50vw;
   }
 
   .hero-text h1 {
@@ -1508,12 +1513,18 @@ span.chip-icon svg {
     gap: 12px;
     align-self: start;
     justify-self: end;
-    margin-right: -8px;
+    align-items: flex-end;
+    width: 100%;
+    max-width: 50vw;
+    margin-right: 0;
   }
 
   .portrait-frame {
-    width: clamp(290px, 30vw, 360px);
-    height: clamp(350px, 37vw, 440px);
+    width: clamp(300px, 32vw, 380px);
+    max-width: 100%;
+    aspect-ratio: 3 / 4;
+    height: auto;
+    border-radius: clamp(150px, 16vw, 190px);
   }
 
   .hero-role {
@@ -1555,6 +1566,11 @@ span.chip-icon svg {
     padding: 6px 10px;
   }
 
+  .typewriter-group {
+    width: 100%;
+    max-width: 100%;
+  }
+
   .panel-grid.two {
     grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
   }
@@ -1575,54 +1591,85 @@ span.chip-icon svg {
   }
 
   .hero {
-    grid-template-columns: 1fr auto;
-    gap: 50px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 14px;
     min-height: initial;
-    padding-bottom: 40px;
+    padding-bottom: 30px;
+    align-items: start;
+  }
+
+  .hero-text {
+    width: 100%;
+    max-width: 50vw;
+    gap: 12px;
   }
 
   .hero-text h1 {
-    font-size: clamp(48px, 8vw, 72px);
-    line-height: 1.1;
-  }
-
-  .portrait-frame {
-    width: clamp(280px, 35vw, 360px);
-    height: clamp(340px, 42vw, 430px);
+    font-size: clamp(40px, 7.2vw, 62px);
+    line-height: 1.06;
   }
 
   .portrait-stack {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    align-items: flex-end;
+    justify-self: end;
+    align-self: start;
+    text-align: right;
+    width: 100%;
+    max-width: 50vw;
+    gap: 12px;
+  }
+
+  .portrait-frame {
+    width: clamp(270px, 34vw, 350px);
+    max-width: 100%;
+    aspect-ratio: 3 / 4;
+    height: auto;
+    border-radius: clamp(145px, 18vw, 190px);
   }
 
   .hero-role {
-    font-size: 16px;
-    padding: 8px 16px;
+    font-size: 14px;
+    padding: 7px 14px;
+    letter-spacing: 2.2px;
   }
 
   .hero-stats {
-    gap: 40px;
-    padding: 20px 0;
+    gap: 28px;
+    padding: 14px 0;
   }
 
   .stat-value {
-    font-size: clamp(28px, 2.5vw, 44px);
+    font-size: clamp(26px, 3.2vw, 40px);
   }
 
   .status-chip {
-    font-size: 12px;
-    padding: 9px 18px;
+    font-size: 11px;
+    padding: 8px 14px;
+    max-width: 100%;
   }
 
   .cta-row {
-    gap: 9px;
+    gap: 8px;
   }
 
   .btn {
-    font-size: 14px;
-    padding: 11px 20px;
+    font-size: 13px;
+    padding: 10px 16px;
+  }
+
+  .contact-row {
+    gap: 8px;
+  }
+
+  .contact-chip {
+    font-size: 10px;
+    padding: 6px 10px;
+  }
+
+  .typewriter-group {
+    width: 100%;
+    max-width: 100%;
   }
 
   .panel-grid.two {
@@ -1760,6 +1807,18 @@ span.chip-icon svg {
     border-radius: 190px;
   }
 
+  .typewriter-group {
+    width: 85vw;
+    max-width: 85vw;
+  }
+
+
+@media (max-width: 412px) {
+  .typewriter-group {
+    width: 85vw;
+    max-width: 85vw;
+  }
+}
   .contact-chip {
     font-size: 10px;
     padding: 6px 10px;

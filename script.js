@@ -652,16 +652,19 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
     const accelerate = el.dataset.accelerate === "true";
 
     if (accelerate) {
+      const isMobilePhone = window.matchMedia('(max-width: 720px)').matches;
+      const maxPhoneTypeWidth = isMobilePhone ? Math.floor(window.innerWidth * 0.85) : Infinity;
       const lockMobileLine = window.matchMedia('(max-width: 720px)').matches && el.classList.contains('no-cursor');
-      const lockedWidth = lockMobileLine ? Math.ceil(el.getBoundingClientRect().width) : 0;
+      const measuredWidth = lockMobileLine ? Math.ceil(el.getBoundingClientRect().width) : 0;
+      const lockedWidth = lockMobileLine ? Math.min(measuredWidth, maxPhoneTypeWidth) : 0;
       const base = (Number(el.dataset.speed) || 140) * delayScale * lineDelayMultiplier;
       const min = (Number(el.dataset.minspeed) || 80) * delayScale * lineDelayMultiplier;
       const factor = Number(el.dataset.accelfactor) || 0.9;
       const pauseMs = pause * 1000;
 
       el.textContent = "";
-      el.style.whiteSpace = "nowrap";
-      el.style.maxWidth = lockMobileLine && lockedWidth ? `${lockedWidth}px` : "none";
+      el.style.whiteSpace = isMobilePhone ? "normal" : "nowrap";
+      el.style.maxWidth = lockMobileLine && lockedWidth ? `${lockedWidth}px` : (isMobilePhone ? '85vw' : 'none');
       if (lockMobileLine && lockedWidth) {
         el.style.width = `${lockedWidth}px`;
         el.style.minWidth = `${lockedWidth}px`;
@@ -693,8 +696,8 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
           setTimeout(tick, Math.max(min, current + jitter));
         } else {
           el.innerHTML = originalHTML;
-          el.style.whiteSpace = lockMobileLine ? "nowrap" : "normal";
-          el.style.maxWidth = lockMobileLine && lockedWidth ? `${lockedWidth}px` : "none";
+          el.style.whiteSpace = isMobilePhone ? "normal" : (lockMobileLine ? "nowrap" : "normal");
+          el.style.maxWidth = lockMobileLine && lockedWidth ? `${lockedWidth}px` : (isMobilePhone ? '85vw' : 'none');
           el.style.borderRightWidth = "3px";
           el.style.animation = `blink ${blink.trim()} step-end infinite`;
 
