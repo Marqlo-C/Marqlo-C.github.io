@@ -1442,7 +1442,12 @@ span.chip-icon svg {
     border-right: none;
     border-radius: 16px 0 0 16px;
     transform: translateX(100%);
-    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+    background: rgba(8, 19, 21, 0.9);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   .floating-cta.open .floating-cta-actions {
@@ -1458,6 +1463,11 @@ span.chip-icon svg {
   .floating-cta-link {
     width: 34px;
     height: 34px;
+    transition: color 0.15s, background 0.15s, border-color 0.15s;
+  }
+
+  .floating-cta.visible .floating-cta-links .floating-cta-link {
+    animation: none;
   }
 
   .floating-cta-icon {
