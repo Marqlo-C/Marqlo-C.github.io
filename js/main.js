@@ -375,7 +375,7 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
 
 // Resume buttons - open resume link in new tab.
 (() => {
-  const resumeUrl = 'https://drive.google.com/file/d/1jB8bLXCQqyy8b-PBuPUv9TzAOVx3lkoL/view?usp=sharing';
+  const resumeUrl = 'https://drive.google.com/file/d/1AjHKk8N1BsOhRN4VJ01PRoxdg6Pltoui/view?usp=sharing';
   const openBtn = document.getElementById('resume-btn');
   const floatingOpenBtn = document.getElementById('resume-btn-floating');
   const contactOpenBtn = document.getElementById('resume-btn-contact');
