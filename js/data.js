@@ -4,7 +4,7 @@
     {
       title: "Toes Down — Multiplayer Study Game",
       summary: "Built a responsive React/Next.js experience for a collaborative study game with the Google Developer Student Club.",
-      tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel", "Mobile-First", "Game Development"],
+      tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
       link: "https://github.com/Marqlo-C/Toes-Down",
       liveLink: "https://toesdown.vercel.app/"
     },
@@ -15,22 +15,29 @@
       link: "https://github.com/Marqlo-C/Embergency"
     },
     {
-      title: "Trashform — AI-Powered Recycling",
-      summary: "Trained a model to classify common waste items from images and give fast, user-friendly feedback.",
-      tags: ["Python", "ML", "UX"],
-      link: "https://github.com/Marqlo-C/TrashForm"
-    },
-    {
-      title: "EcoCar Mobility Team Backend",
-      summary: "Scripted data ingestion pipelines and diagnostics for vehicle telemetry and analytics reporting.",
-      tags: ["APIs", "Data", "Analytics"],
+      title: "Trashform — AI Waste Classifier",
+      summary: "A CalHacks social impact project: built a web app that uses AI to classify waste items from images and provide instant, user-friendly recycling feedback. Frontend in JavaScript/TypeScript, with a focus on accessibility and speed.",
+      tags: ["JavaScript", "TypeScript", "HTML", "CSS", "AI"],
       link: ""
     },
     {
-      title: "Grocer's Gauntlet",
-      summary: "Gameplay programming on a team-built title—tightened core loops, polish, and playtest-driven tweaks.",
-      tags: ["Godot", "GDScript", "Game Development", "Shaders", "UI/UX"],
-      link: "https://github.com/Marqlo-C/Grocers-Gauntlet"
+      title: "EcoCAR | Míocar Script Support Webapp",
+      summary: "Internal UC Davis EcoCAR project: Central hub for managing Tampermonkey userscripts, accessing Míocar data via AI assistant, and viewing usage logs. FastAPI backend, Next.js frontend, Dockerized for local dev. (Production details confidential)",
+      tags: ["FastAPI", "Next.js", "TypeScript", "Python", "Docker", "PostgreSQL", "AI", "Internal"],
+      link: ""
+    },
+    {
+      title: "MioCar Web Extension Scripts",
+      summary: "A collection of Tampermonkey/Greasemonkey user scripts for automating tasks on the share.car admin portal. Includes booking automation, data export, and reporting tools. Developed for UC Davis EcoCAR and NCST research. Public scripts and research docs included.",
+      tags: ["JavaScript", "Tampermonkey", "Automation", "API", "Jupyter Notebook", "Research"],
+      link: "https://github.com/Hummaton/MioCar-WebExtension-Scripts"
+    },
+    {
+      title: "Grocer's Gauntlet — Procedural Roguelite Shopping Crawler",
+      summary: "Run-based shopping crawler built in Godot 4. Each trip deeper into the store increases risk and opportunity. Features cart selection, procedural aisles, haggling minigame, persistent inventory, and custom shaders. Narrative and systems blend survival, resource management, and story.",
+      tags: ["Godot", "GDScript", "Shaders", "Procedural Generation", "Resource Management", "Dialogue System", "Pixel Art"],
+      link: "https://github.com/Marqlo-C/Grocers_Gauntlet--Roguelite_Game",
+      liveLink: "https://generss.itch.io/grocers-gauntlet"
     },
     {
       title: "Aggie-gility — Adaptive Aerodynamics Prototype",
@@ -39,25 +46,28 @@
       link: "https://www.linkedin.com/in/marq-lott/details/projects/#1727734114532"
     },
     {
-      title: "Note Taking App",
-      summary: "Lightweight notes app with a clean UI for fast capture and organization of ideas.",
-      tags: ["Notes", "Productivity"],
-      link: "https://github.com/Marqlo-C/NoteTakingApp"
+      title: "Noteworthy — AI Math Notes & Animation Suite",
+      summary: "A full-stack note-taking and math animation platform. Features a React + TypeScript + Vite web app for fast, beautiful notes, and a Python backend that generates 3Blue1Brown-style Manim videos from text prompts. Supports LaTeX for advanced math, instant video previews, and AI-powered text features.",
+      tags: ["React", "TypeScript", "Vite", "Python", "Manim", "LaTeX", "JavaScript", "CSS", "TeX", "AI"],
+      link: ""
     },
     {
       title: "Secret Message Encoder",
       summary: "Python notebook for encoding messages with probability and steganography techniques.",
-      tags: ["Python", "Jupyter Notebook", "Data Science", "Probability", "Steganography", "Matplotlib", "Numpy", "Pandas"]
+      tags: ["Python", "Jupyter Notebook", "Data Science", "Probability", "Steganography", "Matplotlib", "Numpy", "Pandas"],
+      link: "https://github.com/Marqlo-C/Secret-Message-Encoder"
     },
     {
       title: "Ms Pac-Man — Agent",
       summary: "Deep Q-Network (DQN) agent for Ms Pac-Man using reinforcement learning.",
-      tags: ["Python", "Jupyter Notebook", "DQN", "R Learning", "AI", "Data Visualization"]
+      tags: ["Python", "Jupyter Notebook", "DQN", "R Learning", "AI", "Data Visualization"],
+      link: "https://github.com/Marqlo-C/MsPacman-Agent"
     },
     {
       title: "Connect 4 Player — Agent",
       summary: "Python game engine with multiple AI agents (minimax, alpha-beta, Monte Carlo).",
-      tags: ["Python", "AI", "Minimax", "Alpha-Beta Pruning", "Monte Carlo Simulation", "Pygame", "CLI", "Game Engine"]
+      tags: ["Python", "AI", "Minimax", "Alpha-Beta Pruning", "Monte Carlo Simulation", "Pygame", "CLI", "Game Engine"],
+      link: "https://github.com/Marqlo-C/Connect4-Agent"
     }
   ];
 
