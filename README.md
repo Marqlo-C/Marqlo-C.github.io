@@ -170,7 +170,6 @@ Recommended flow for any interaction change:
 
 - **View More Toggle:**
   - By default, only the first 4 projects are shown. Click 'View More' to reveal all projects, or 'View Less' to collapse.
-  - The two EcoCAR projects are always shown first, followed by the two most impressive public projects, with the rest in original order.
   - Fully responsive and accessible across desktop, tablet, and mobile.
 - **Project Ordering:**
   - To change which projects appear first, update the order in `js/data.js`.

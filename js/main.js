@@ -1,7 +1,10 @@
 // App bootstrap and feature wiring.
+
+// Projects and Timeline initialization
 (() => {
   const projectGrid = document.getElementById('project-grid');
   const toggleBtn = document.getElementById('project-toggle-btn');
+  const timelineList = document.getElementById('timeline-list');
   const data = window.SiteData || { projects: [], experiences: [] };
   const renderers = window.SiteRenderers || {};
   let showAll = false;
@@ -24,6 +27,11 @@
   }
 
   updateProjects();
+
+  // Render timeline experiences
+  if (timelineList && typeof renderers.renderTimeline === 'function') {
+    renderers.renderTimeline(data.experiences, timelineList);
+  }
 })();
 
 const VIEWPORT_QUERIES = Object.freeze({
