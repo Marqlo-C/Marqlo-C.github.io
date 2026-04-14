@@ -2,25 +2,6 @@
 (() => {
   const projects = [
     {
-      title: "Toes Down — Multiplayer Study Game",
-      summary: "Built a responsive React/Next.js experience for a collaborative study game with the Google Developer Student Club.",
-      tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
-      link: "https://github.com/Marqlo-C/Toes-Down",
-      liveLink: "https://toesdown.vercel.app/"
-    },
-    {
-      title: "Embergency — Wildfire Response Web App",
-      summary: "Overlaid real-time wildfire data with cell-tower coverage to surface dead zones and support responders.",
-      tags: ["JavaScript", "HTML", "CSS", "REST APIs", "Real-Time Data", "OpenWeatherMap", "Xweather", "Unwired Labs"],
-      link: "https://github.com/Marqlo-C/Embergency"
-    },
-    {
-      title: "Trashform — AI Waste Classifier",
-      summary: "A CalHacks social impact project: built a web app that uses AI to classify waste items from images and provide instant, user-friendly recycling feedback. Frontend in JavaScript/TypeScript, with a focus on accessibility and speed.",
-      tags: ["JavaScript", "TypeScript", "HTML", "CSS", "AI"],
-      link: ""
-    },
-    {
       title: "EcoCAR | Míocar Script Support Webapp",
       summary: "Internal UC Davis EcoCAR project: Central hub for managing Tampermonkey userscripts, accessing Míocar data via AI assistant, and viewing usage logs. FastAPI backend, Next.js frontend, Dockerized for local dev. (Production details confidential)",
       tags: ["FastAPI", "Next.js", "TypeScript", "Python", "Docker", "PostgreSQL", "AI", "Internal"],
@@ -40,16 +21,35 @@
       liveLink: "https://generss.itch.io/grocers-gauntlet"
     },
     {
-      title: "Aggie-gility — Adaptive Aerodynamics Prototype",
-      summary: "Arduino-powered model that adjusts aerodynamic surfaces on braking to increase downforce; handled programming, sensors, and motor control in a UC Davis AvenueE team.",
-      tags: ["Arduino", "Embedded", "Hardware", "Sensors"],
-      link: "https://www.linkedin.com/in/marq-lott/details/projects/#1727734114532"
-    },
-    {
       title: "Noteworthy — AI Math Notes & Animation Suite",
       summary: "A full-stack note-taking and math animation platform. Features a React + TypeScript + Vite web app for fast, beautiful notes, and a Python backend that generates 3Blue1Brown-style Manim videos from text prompts. Supports LaTeX for advanced math, instant video previews, and AI-powered text features.",
       tags: ["React", "TypeScript", "Vite", "Python", "Manim", "LaTeX", "JavaScript", "CSS", "TeX", "AI"],
       link: ""
+    },
+    {
+      title: "Toes Down — Multiplayer Study Game",
+      summary: "Built a responsive React/Next.js experience for a collaborative study game with the Google Developer Student Club.",
+      tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
+      link: "https://github.com/Marqlo-C/Toes-Down",
+      liveLink: "https://toesdown.vercel.app/"
+    },
+    {
+      title: "Embergency — Wildfire Response Web App",
+      summary: "Overlaid real-time wildfire data with cell-tower coverage to surface dead zones and support responders.",
+      tags: ["JavaScript", "HTML", "CSS", "REST APIs", "Real-Time Data", "OpenWeatherMap", "Xweather", "Unwired Labs"],
+      link: "https://github.com/Marqlo-C/Embergency"
+    },
+    {
+      title: "Trashform — AI Waste Classifier",
+      summary: "A CalHacks social impact project: built a web app that uses AI to classify waste items from images and provide instant, user-friendly recycling feedback. Frontend in JavaScript/TypeScript, with a focus on accessibility and speed.",
+      tags: ["JavaScript", "TypeScript", "HTML", "CSS", "AI"],
+      link: ""
+    },
+    {
+      title: "Aggie-gility — Adaptive Aerodynamics Prototype",
+      summary: "Arduino-powered model that adjusts aerodynamic surfaces on braking to increase downforce; handled programming, sensors, and motor control in a UC Davis AvenueE team.",
+      tags: ["Arduino", "Embedded", "Hardware", "Sensors"],
+      link: "https://www.linkedin.com/in/marq-lott/details/projects/#1727734114532"
     },
     {
       title: "Secret Message Encoder",

@@ -166,6 +166,22 @@ Recommended flow for any interaction change:
 2. For typed lines, update `.typewriter` content and timing-related `data-*` attributes in `index.html`.
 3. Verify type speed and wrapping on phone and tablet.
 
+## Project Grid Features
+
+- **View More Toggle:**
+  - By default, only the first 4 projects are shown. Click 'View More' to reveal all projects, or 'View Less' to collapse.
+  - The two EcoCAR projects are always shown first, followed by the two most impressive public projects, with the rest in original order.
+  - Fully responsive and accessible across desktop, tablet, and mobile.
+- **Project Ordering:**
+  - To change which projects appear first, update the order in `js/data.js`.
+  - Internal/private projects are listed but do not link to source code for privacy.
+- **Accessibility:**
+  - The toggle button uses `aria-expanded` and `aria-controls` for screen readers.
+
+## Git Workflow
+- All changes are committed using amend and force-push for a clean, linear history.
+- Internal/production projects (e.g., EcoCAR) are described without exposing confidential details.
+
 ## Pre-Release Checklist
 
 Before pushing to production / GitHub Pages:

@@ -1,17 +1,29 @@
 // App bootstrap and feature wiring.
 (() => {
   const projectGrid = document.getElementById('project-grid');
-  const timelineList = document.getElementById('timeline-list');
+  const toggleBtn = document.getElementById('project-toggle-btn');
   const data = window.SiteData || { projects: [], experiences: [] };
   const renderers = window.SiteRenderers || {};
+  let showAll = false;
 
-  if (projectGrid && typeof renderers.renderProjects === 'function') {
-    renderers.renderProjects(data.projects, projectGrid);
+  function updateProjects() {
+    if (projectGrid && typeof renderers.renderProjects === 'function') {
+      renderers.renderProjects(data.projects, projectGrid, showAll);
+      if (toggleBtn) {
+        toggleBtn.textContent = showAll ? 'View Less' : 'View More';
+        toggleBtn.setAttribute('aria-expanded', showAll ? 'true' : 'false');
+      }
+    }
   }
 
-  if (timelineList && typeof renderers.renderTimeline === 'function') {
-    renderers.renderTimeline(data.experiences, timelineList);
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      showAll = !showAll;
+      updateProjects();
+    });
   }
+
+  updateProjects();
 })();
 
 const VIEWPORT_QUERIES = Object.freeze({
