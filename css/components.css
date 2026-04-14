@@ -138,6 +138,8 @@ body.top-fade-mode #contact {
 }
 
 .chip-token {
+  font-family: var(--mono);
+  letter-spacing: 0.3px;
   color: #57c2ff;
   text-shadow: 0 0 10px rgba(87, 194, 255, 0.22);
   font-weight: 600;
@@ -462,8 +464,82 @@ span.chip-icon svg {
 /* ─── Footer ──────────────────────────────── */
 
 .site-footer {
-  padding: 20px clamp(24px, 6vw, 80px) 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px clamp(24px, 6vw, 80px) 18px;
   color: var(--muted); text-align: center;
   font-size: 12px; border-top: 1px solid var(--rule);
+}
+
+.site-visit-counter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  width: fit-content;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  opacity: 0.9;
+}
+
+.site-visit-card {
+  position: relative;
+  width: 72px;
+  height: 28px;
+  perspective: 520px;
+  transform-style: preserve-3d;
+  flex: 0 0 auto;
+}
+
+.site-visit-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(154, 213, 214, 0.3);
+  background: rgba(154, 213, 214, 0.07);
+  color: var(--accent);
+  text-align: center;
+  padding: 2px 8px;
+  font-variant-numeric: tabular-nums;
+  transition: transform 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  backface-visibility: hidden;
+}
+
+.site-visit-face-value {
+  color: var(--accent);
+  min-width: 0;
+  text-align: center;
+  line-height: 1;
+}
+
+.site-visit-face-front {
+  transform: rotateX(0deg);
+}
+
+.site-visit-face-back {
+  transform: rotateX(180deg);
+}
+
+.site-visit-card.flipping .site-visit-face-front {
+  transform: rotateX(-180deg);
+}
+
+.site-visit-card.flipping .site-visit-face-back {
+  transform: rotateX(0deg);
 }
 

@@ -1,3 +1,16 @@
+# Marq Lott | Personal Website
+
+This is the personal website of Marq Lott, built as a single-page application with a cartoon-inspired, playful design. It features:
+
+- Responsive layout with custom hero, about, focus, projects, stack, timeline, and contact sections
+- Playful, cartoon-like UI elements and color palette
+- Dynamic site visit counter (using a public API with local fallback)
+- Animated backgrounds and interactive elements
+- Modular CSS for easy customization
+- Professional, amend-and-force-push git workflow for clean commit history
+
+---
+
 # Personal Website
 
 Portfolio site for Marq Lott, built as a static frontend and deployed with GitHub Pages.

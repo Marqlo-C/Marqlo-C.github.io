@@ -288,6 +288,71 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   });
 });
 
+// Updates the footer visit badge using CounterAPI.dev.
+(() => {
+  const visitCardEl = document.getElementById('site-visit-count');
+  if (!visitCardEl) return;
+
+  const frontFaceEl = visitCardEl.querySelector('.site-visit-face-front');
+  const backFaceEl = visitCardEl.querySelector('.site-visit-face-back');
+  if (!frontFaceEl || !backFaceEl) return;
+
+  const frontValueEl = frontFaceEl.querySelector('.site-visit-face-value');
+  const backValueEl = backFaceEl.querySelector('.site-visit-face-value');
+  if (!frontValueEl || !backValueEl) return;
+
+  const applyVisitValue = (valueText) => {
+    const normalized = String(valueText);
+    if (frontValueEl.textContent === normalized) return;
+
+    backValueEl.textContent = normalized;
+    visitCardEl.classList.add('flipping');
+
+    const finishFlip = () => {
+      frontValueEl.textContent = normalized;
+      visitCardEl.classList.remove('flipping');
+    };
+
+    frontFaceEl.addEventListener('transitionend', finishFlip, { once: true });
+  };
+
+  const fallbackToLocal = () => {
+    try {
+      const storageKey = 'site_visit_count_local_fallback';
+      const current = Number(localStorage.getItem(storageKey) || '0');
+      const next = Number.isFinite(current) ? current + 1 : 1;
+      localStorage.setItem(storageKey, String(next));
+      applyVisitValue(next.toLocaleString());
+    } catch {
+      applyVisitValue('1');
+    }
+  };
+
+  const namespace = 'marqlott-personal-website';
+  const safeHost = (window.location.hostname || 'local').toLowerCase().replace(/[^a-z0-9.-]/g, '-');
+  const rawPath = window.location.pathname && window.location.pathname !== '/' ? window.location.pathname : '/home';
+  const safePath = rawPath
+    .toLowerCase()
+    .replace(/[^a-z0-9/\-]/g, '-')
+    .replace(/\//g, '_')
+    .replace(/^_+/, '');
+  const key = `${safeHost}_${safePath || 'home'}`;
+  const endpoint = `https://api.counterapi.dev/v1/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}/up`;
+
+  fetch(endpoint, { cache: 'no-store' })
+    .then((response) => {
+      if (!response.ok) throw new Error(`Counter API failed: ${response.status}`);
+      return response.json();
+    })
+    .then((payload) => {
+      if (typeof payload.count !== 'number') throw new Error('Unexpected payload');
+      applyVisitValue(payload.count.toLocaleString());
+    })
+    .catch(() => {
+      fallbackToLocal();
+    });
+})();
+
 // Resume modal - opens from both the hero and contact section buttons.
 (() => {
   const modal = document.getElementById('resume-modal');

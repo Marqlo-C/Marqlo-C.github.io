@@ -4,14 +4,14 @@
     {
       title: "Toes Down — Multiplayer Study Game",
       summary: "Built a responsive React/Next.js experience for a collaborative study game with the Google Developer Student Club.",
-      tags: ["React", "Next.js", "Team Project"],
+      tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel", "Mobile-First", "Game Development"],
       link: "https://github.com/Marqlo-C/Toes-Down",
       liveLink: "https://toesdown.vercel.app/"
     },
     {
       title: "Embergency — Wildfire Response Web App",
       summary: "Overlaid real-time wildfire data with cell-tower coverage to surface dead zones and support responders.",
-      tags: ["Maps", "APIs", "Operations"],
+      tags: ["JavaScript", "HTML", "CSS", "REST APIs", "Real-Time Data", "OpenWeatherMap", "Xweather", "Unwired Labs"],
       link: "https://github.com/Marqlo-C/Embergency"
     },
     {
@@ -29,7 +29,7 @@
     {
       title: "Grocer's Gauntlet",
       summary: "Gameplay programming on a team-built title—tightened core loops, polish, and playtest-driven tweaks.",
-      tags: ["Game Dev", "Team", "Gameplay"],
+      tags: ["Godot", "GDScript", "Game Development", "Shaders", "UI/UX"],
       link: "https://github.com/Marqlo-C/Grocers-Gauntlet"
     },
     {
@@ -43,6 +43,21 @@
       summary: "Lightweight notes app with a clean UI for fast capture and organization of ideas.",
       tags: ["Notes", "Productivity"],
       link: "https://github.com/Marqlo-C/NoteTakingApp"
+    },
+    {
+      title: "Secret Message Encoder",
+      summary: "Python notebook for encoding messages with probability and steganography techniques.",
+      tags: ["Python", "Jupyter Notebook", "Data Science", "Probability", "Steganography", "Matplotlib", "Numpy", "Pandas"]
+    },
+    {
+      title: "Ms Pac-Man — Agent",
+      summary: "Deep Q-Network (DQN) agent for Ms Pac-Man using reinforcement learning.",
+      tags: ["Python", "Jupyter Notebook", "DQN", "R Learning", "AI", "Data Visualization"]
+    },
+    {
+      title: "Connect 4 Player — Agent",
+      summary: "Python game engine with multiple AI agents (minimax, alpha-beta, Monte Carlo).",
+      tags: ["Python", "AI", "Minimax", "Alpha-Beta Pruning", "Monte Carlo Simulation", "Pygame", "CLI", "Game Engine"]
     }
   ];
 
