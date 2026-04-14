@@ -604,6 +604,7 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
 
   const isTabletOrSmaller = window.matchMedia('(max-width: 1199px)').matches;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const enableShooters = !prefersReducedMotion;
   const targetFps = prefersReducedMotion ? 24 : (isTabletOrSmaller ? 24 : 45);
   const frameInterval = 1000 / targetFps;
 
@@ -674,6 +675,7 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
     const dt = Math.min((ts - lastTs) / 1000, 0.05);
     lastTs = ts;
     nextShot -= dt * 1000;
+    const shootersPausedForScroll = isTabletOrSmaller && ts < scrollingUntil;
 
     ctx.clearRect(0, 0, W, H);
 
@@ -685,52 +687,54 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
       ctx.fill();
     }
 
-    for (let i = shooters.length - 1; i >= 0; i--) {
-      const s = shooters[i];
-      s.x += s.vx * dt;
-      s.y += s.vy * dt;
-      s.life -= dt * 0.65;
+    if (enableShooters && !shootersPausedForScroll) {
+      for (let i = shooters.length - 1; i >= 0; i--) {
+        const s = shooters[i];
+        s.x += s.vx * dt;
+        s.y += s.vy * dt;
+        s.life -= dt * 0.65;
 
-      if (s.life <= 0 || s.x < -150 || s.y > H + 100) {
-        shooters.splice(i, 1);
-        continue;
-      }
+        if (s.life <= 0 || s.x < -150 || s.y > H + 100) {
+          shooters.splice(i, 1);
+          continue;
+        }
 
-      const speed = Math.sqrt(s.vx * s.vx + s.vy * s.vy);
-      const nx = s.vx / speed;
-      const ny = s.vy / speed;
+        const speed = Math.sqrt(s.vx * s.vx + s.vy * s.vy);
+        const nx = s.vx / speed;
+        const ny = s.vy / speed;
 
-      const eggImg = s.easterEgg === 'beemo' ? beemo : s.easterEgg === 'serverBeemo' ? serverBeemo : null;
-      if (eggImg && eggImg.complete && eggImg.naturalWidth > 0) {
-        const size = s.easterEggSize;
-        ctx.save();
-        ctx.globalAlpha = s.life;
-        ctx.drawImage(eggImg, s.x - size / 2, s.y - size / 2, size, size);
-        ctx.restore();
-      } else {
-        const tx = s.x - nx * s.tail;
-        const ty = s.y - ny * s.tail;
+        const eggImg = s.easterEgg === 'beemo' ? beemo : s.easterEgg === 'serverBeemo' ? serverBeemo : null;
+        if (eggImg && eggImg.complete && eggImg.naturalWidth > 0) {
+          const size = s.easterEggSize;
+          ctx.save();
+          ctx.globalAlpha = s.life;
+          ctx.drawImage(eggImg, s.x - size / 2, s.y - size / 2, size, size);
+          ctx.restore();
+        } else {
+          const tx = s.x - nx * s.tail;
+          const ty = s.y - ny * s.tail;
 
-        const g = ctx.createLinearGradient(tx, ty, s.x, s.y);
-        g.addColorStop(0, 'rgba(255,255,255,0)');
-        g.addColorStop(0.6, `rgba(200,240,255,${s.life * 0.35})`);
-        g.addColorStop(1, `rgba(255,255,255,${s.life})`);
+          const g = ctx.createLinearGradient(tx, ty, s.x, s.y);
+          g.addColorStop(0, 'rgba(255,255,255,0)');
+          g.addColorStop(0.6, `rgba(200,240,255,${s.life * 0.35})`);
+          g.addColorStop(1, `rgba(255,255,255,${s.life})`);
 
-        ctx.beginPath();
-        ctx.moveTo(tx, ty);
-        ctx.lineTo(s.x, s.y);
-        ctx.strokeStyle = g;
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(tx, ty);
+          ctx.lineTo(s.x, s.y);
+          ctx.strokeStyle = g;
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
 
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, 1.8, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,255,255,${s.life})`;
-        ctx.fill();
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, 1.8, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255,255,255,${s.life})`;
+          ctx.fill();
+        }
       }
     }
 
-    if (!prefersReducedMotion && nextShot <= 0) {
+    if (enableShooters && !shootersPausedForScroll && nextShot <= 0) {
       spawnShooter();
       nextShot = 2000 + Math.random() * 4000;
     }
@@ -740,7 +744,6 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
     if (!running) return;
     rafId = requestAnimationFrame(tick);
 
-    if (isTabletOrSmaller && ts < scrollingUntil) return;
     if (ts - lastFrameRender < frameInterval) return;
     lastFrameRender = ts;
     draw(ts);
@@ -765,7 +768,8 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   window.addEventListener('resize', resize);
   if (isTabletOrSmaller) {
     const markScrolling = () => {
-      scrollingUntil = performance.now() + 120;
+      scrollingUntil = performance.now() + 160;
+      shooters.length = 0;
     };
     window.addEventListener('scroll', markScrolling, { passive: true });
     window.addEventListener('touchmove', markScrolling, { passive: true });
