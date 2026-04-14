@@ -23,9 +23,7 @@ This is the personal website of Marq Lott, built as a single-page application wi
 
 ---
 
-# Personal Website
-
-Portfolio site for Marq Lott, built as a static frontend and deployed with GitHub Pages.
+Built as a static frontend and deployed with GitHub Pages.
 
 ## Stack
 
