@@ -1,0 +1,141 @@
+/* ─── Background ──────────────────────────── */
+
+.starfield, .grid-overlay, .aurora {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0;
+}
+.aurora { overflow: hidden; }
+
+.aurora-blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(100px); opacity: 0.065;
+  will-change: transform;
+}
+
+.blob-1 {
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  top: -15%; left: -10%;
+  animation: blobDrift1 24s ease-in-out infinite;
+}
+.blob-2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, var(--peach) 0%, transparent 70%);
+  top: 35%; right: -12%;
+  animation: blobDrift2 30s ease-in-out infinite;
+}
+.blob-3 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, var(--green) 0%, transparent 70%);
+  bottom: -10%; left: 25%;
+  animation: blobDrift3 26s ease-in-out infinite;
+}
+.blob-4 {
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  top: 55%; left: 55%;
+  animation: blobDrift4 34s ease-in-out infinite;
+}
+
+@keyframes blobDrift1 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%      { transform: translate(80px,60px) scale(1.08); }
+  66%      { transform: translate(-40px,90px) scale(0.95); }
+}
+@keyframes blobDrift2 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%      { transform: translate(-90px,60px) scale(1.05); }
+  66%      { transform: translate(-50px,-70px) scale(1.12); }
+}
+@keyframes blobDrift3 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50%      { transform: translate(60px,-70px) scale(1.08); }
+}
+@keyframes blobDrift4 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  25%      { transform: translate(-70px,-50px) scale(1.1); }
+  75%      { transform: translate(55px,35px) scale(0.9); }
+}
+
+@keyframes cosmosOmbreShift {
+  0% {
+    background-position: 0% 18%, 100% 0%, 52% 100%, 0% 50%;
+  }
+  35% {
+    background-position: 20% 40%, 84% 18%, 70% 76%, 35% 45%;
+  }
+  70% {
+    background-position: 8% 62%, 100% 46%, 36% 74%, 70% 55%;
+  }
+  100% {
+    background-position: 24% 30%, 76% 12%, 58% 90%, 100% 50%;
+  }
+}
+
+.starfield { width: 100%; height: 100%; }
+
+.grid-overlay {
+  background-size: 52px 52px;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  mix-blend-mode: soft-light;
+}
+
+@media (min-width: 1200px) {
+  main {
+    padding: var(--hero-offset-desktop) clamp(18px, 3.5vw, 54px) 72px;
+    gap: 32px;
+  }
+
+  .hero {
+    gap: 44px;
+    min-height: initial;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  .hero-text {
+    gap: 16px;
+  }
+
+  .hero-text h1 {
+    font-size: clamp(46px, 4vw, 66px);
+  }
+
+  .portrait-frame {
+    width: clamp(280px, 22vw, 340px);
+    height: clamp(340px, 28vw, 410px);
+  }
+
+  .portrait-stack {
+    gap: 14px;
+  }
+
+  .hero-stats {
+    gap: 32px;
+    padding: 18px 0;
+  }
+
+  .status-chip {
+    padding: 9px 18px;
+    font-size: 12px;
+  }
+
+  .cta-row {
+    gap: 8px;
+  }
+
+  .contact-row {
+    gap: 8px;
+  }
+
+  .panel {
+    scroll-margin-top: 88px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body { animation: none; }
+}
+

@@ -1,135 +1,36 @@
-const projects = [
-  {
-    title: "Toes Down — Multiplayer Study Game",
-    summary: "Built a responsive React/Next.js experience for a collaborative study game with the Google Developer Student Club.",
-    tags: ["React", "Next.js", "Team Project"],
-    link: "https://github.com/Marqlo-C/Toes-Down",
-    liveLink: "https://toesdown.vercel.app/"
-  },
-  {
-    title: "Embergency — Wildfire Response Web App",
-    summary: "Overlaid real-time wildfire data with cell-tower coverage to surface dead zones and support responders.",
-    tags: ["Maps", "APIs", "Operations"],
-    link: "https://github.com/Marqlo-C/Embergency"
-  },
-  {
-    title: "Trashform — AI-Powered Recycling",
-    summary: "Trained a model to classify common waste items from images and give fast, user-friendly feedback.",
-    tags: ["Python", "ML", "UX"],
-    link: "https://github.com/Marqlo-C/TrashForm"
-  },
-  {
-    title: "EcoCar Mobility Team Backend",
-    summary: "Scripted data ingestion pipelines and diagnostics for vehicle telemetry and analytics reporting.",
-    tags: ["APIs", "Data", "Analytics"],
-    link: ""
-  },
-  {
-    title: "Grocer's Gauntlet",
-    summary: "Gameplay programming on a team-built title—tightened core loops, polish, and playtest-driven tweaks.",
-    tags: ["Game Dev", "Team", "Gameplay"],
-    link: "https://github.com/Marqlo-C/Grocers-Gauntlet"
-  },
-  {
-    title: "Aggie-gility — Adaptive Aerodynamics Prototype",
-    summary: "Arduino-powered model that adjusts aerodynamic surfaces on braking to increase downforce; handled programming, sensors, and motor control in a UC Davis AvenueE team.",
-    tags: ["Arduino", "Embedded", "Hardware", "Sensors"],
-    link: "https://www.linkedin.com/in/marq-lott/details/projects/#1727734114532"
-  },
-  {
-    title: "Note Taking App",
-    summary: "Lightweight notes app with a clean UI for fast capture and organization of ideas.",
-    tags: ["Notes", "Productivity"],
-    link: "https://github.com/Marqlo-C/NoteTakingApp"
+// App bootstrap and feature wiring.
+(() => {
+  const projectGrid = document.getElementById('project-grid');
+  const timelineList = document.getElementById('timeline-list');
+  const data = window.SiteData || { projects: [], experiences: [] };
+  const renderers = window.SiteRenderers || {};
+
+  if (projectGrid && typeof renderers.renderProjects === 'function') {
+    renderers.renderProjects(data.projects, projectGrid);
   }
-];
 
-const experiences = [
-  {
-    date: "2025 to now",
-    role: "B.S. Computer Science",
-    place: "UC Davis, College of Engineering",
-    blurb: "Program Advisor for AvenueE Summer Bridge, mentoring 60 first-generation engineering students from low-income and underrepresented backgrounds through a two-week intensive. Building backend infrastructure for EcoCAR Mobility: migrated API keys to the server, wrote scrapers to log carshare usage data so we can see where cars stop and help underserved communities get actual access to mobility, refactored TamperMonkey to run server-side instead of in the browser, fixed the OpenAI chatbot to maintain context across conversations for people who aren't technically inclined. Worked with the Aggie Mobility project using Arduino to explore adaptive aerodynamics for emergency braking. Shipped three applications over 2025: Emergency at HackDavis, Trashform at CalHacks AI, and a Note Taking App at CalHacks with different teams. Contributed to Toes Down for Google Developer Student Club. Active in NSBE and SAA. CalHacks 2026 coming."
-  },
-  {
-    date: "2024 to 2025",
-    role: "A.S. Computer Science & Physics",
-    place: "San Joaquin Delta College",
-    blurb: "Spent my savings living frugally and cramming what could have been three years of coursework into two. Graduated with an Associates in Computer Science, an Associates in Physics, and one class short of an Associates in Mathematics. Maintained a 4.0 GPA. The work meant no life outside of classes and studying. Collaborated with the Physics, Mathematics, and Computer Science Club on a solar system simulation in Python that modeled orbital mechanics and gravitational interactions from first principles."
-  },
-  {
-    date: "2020 to 2024",
-    role: "Stepped back",
-    place: "California",
-    blurb: "Left sales. Made the intentional call to go back to school because I knew I wanted to build systems, not sell them. That decision costs you in money, time, and pride. But it forces clarity."
-  },
-  {
-    date: "2020 to 2021",
-    role: "Sr. Business Account Executive",
-    place: "Spectrum Enterprise, Los Angeles",
-    blurb: "Came back for a second run at Spectrum. By this point most of the region was already built out with fiber, so the work was different. Less about landing new accounts and more about selling fiber upgrades and helping existing customers plan for their growing bandwidth demands. The pool of prospects was smaller but the technical depth went deeper. Fewer people to sell to meant conversations shifted toward understanding what their actual infrastructure needed to look like three years out."
-  },
-  {
-    date: "2020",
-    role: "Regional Account Manager",
-    place: "Cogent Communications, Los Angeles",
-    blurb: "In my first quarter, I hit 143% of quota selling enterprise telecom infrastructure. The role involved working with customers and our engineering team to design customized network buildouts across fiber, data centers, bandwidth, VPN, and server solutions. It wasn't about moving boxes off a spec sheet. It was understanding what a customer actually needed to accomplish, then working with our engineers to design a solution that would actually work for their situation, then making sure it got implemented correctly."
-  },
-  {
-    date: "2016 to 2020",
-    role: "Sr. Business Account Executive",
-    place: "Spectrum Enterprise, Los Angeles",
-    blurb: "Top performer in the region for four years straight. Owned Fortune 500 accounts from initial discovery through ongoing partnership. The real work was understanding what they had to accomplish with their network, proposing the right services and solutions, then staying involved through deployment to make sure everything actually worked the way they expected. Long sales cycles force you to understand the customer's problem or you don't close the deal. The relationships that stuck were the ones where they were still happy years later."
-  },
-  {
-    date: "2013 to 2017",
-    role: "Cryptologic Technician - Networking",
-    place: "US Navy, Los Angeles",
-    blurb: "Spent four years in network defense and incident response. Vulnerability assessment, threat detection, rebuilding what happened after systems got hit. Systems fail in predictable ways if you understand them. Understanding how something breaks is as important as knowing how it works, maybe more so. In a results-driven world, uptime, reliability, availability, security, and privacy aren't nice-to-haves. They're what determines whether people trust your system or avoid it entirely. Understanding the underlying weaknesses is as important as understanding the design."
+  if (timelineList && typeof renderers.renderTimeline === 'function') {
+    renderers.renderTimeline(data.experiences, timelineList);
   }
-];
+})();
 
-const projectGrid = document.getElementById("project-grid");
-const timelineList = document.getElementById("timeline-list");
+const VIEWPORT_QUERIES = Object.freeze({
+  phone: '(max-width: 720px)',
+  navCompact: '(max-width: 960px)',
+  tabletOnly: '(min-width: 721px) and (max-width: 1199px)',
+  tabletOrDown: '(max-width: 1199px)',
+});
 
-// Stamps project cards into the grid from the projects array above.
-function renderProjects() {
-  projects.forEach((project) => {
-    const card = document.createElement("article");
-    card.className = "card project-card";
-    const starIcon = `<span class="project-link-icon project-link-icon-star" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.8 6.4 6.7 2.4-6.7 2.4L12 20.1l-2.8-6.4-6.7-2.4 6.7-2.4z"></path></svg></span>`;
-    const links = [
-      project.liveLink ? `<a class="link" href="${project.liveLink}" target="_blank" rel="noopener"><span>Live site ↗</span></a>` : '',
-      project.link ? `<a class="link" href="${project.link}" target="_blank" rel="noopener"><span>View project</span>${starIcon}</a>` : ''
-    ].filter(Boolean).join('');
-    card.innerHTML = `
-      <div class="card-title">${project.title}</div>
-      <p>${project.summary}</p>
-      <div class="chip-row">${project.tags.map((tag) => `<span class="chip chip-token">${tag}</span>`).join("")}</div>
-      ${links}
-    `;
-    projectGrid.appendChild(card);
-  });
-}
+const TOP_FADE_SECTION_SELECTORS = Object.freeze([
+  '#about',
+  '#focus',
+  '#projects',
+  '#stack',
+  '#timeline',
+  '#contact',
+]);
 
-// Stamps timeline entries into the timeline list from the experiences array above.
-function renderTimeline() {
-  experiences.forEach((item) => {
-    const entry = document.createElement("article");
-    entry.className = "timeline-item";
-    entry.innerHTML = `
-      <div class="timeline-dot"></div>
-      <div class="timeline-date">${item.date}</div>
-      <div class="timeline-role">${item.role}</div>
-      <div class="timeline-meta">${item.place}</div>
-      <p>${item.blurb}</p>
-    `;
-    timelineList.appendChild(entry);
-  });
-}
-
-renderProjects();
-renderTimeline();
+const isViewportMatch = (queryKey) => window.matchMedia(VIEWPORT_QUERIES[queryKey]).matches;
 
 // Draws a responsive hand-drawn arrow from the "now" text to the role badge.
 (() => {
@@ -186,7 +87,7 @@ renderTimeline();
     arrowReady = true;
 
     if (ledeEl) {
-      const isTablet = window.matchMedia('(min-width: 721px) and (max-width: 1199px)').matches;
+      const isTablet = isViewportMatch('tabletOnly');
       const ledeDelayMs = isTablet ? 125 : 100;
       setTimeout(() => {
         ledeEl.classList.add('ready');
@@ -196,7 +97,7 @@ renderTimeline();
     updateArrow();
 
     // On tablets, wait longer for text wrapping to fully settle
-    const isTablet = window.matchMedia('(min-width: 721px) and (max-width: 1199px)').matches;
+    const isTablet = isViewportMatch('tabletOnly');
     const delayMs = isTablet ? 600 : 400;
 
     setTimeout(() => {
@@ -227,7 +128,7 @@ renderTimeline();
   const smoothScrollTo = (targetTop) => {
     const startTop = window.scrollY;
     const distance = targetTop - startTop;
-    const isMobile = window.matchMedia('(max-width: 720px)').matches;
+    const isMobile = isViewportMatch('phone');
     const duration = isMobile ? 920 : 620;
     const startTs = performance.now();
 
@@ -243,7 +144,7 @@ renderTimeline();
 
   const getOffset = () => {
     const rect = header.getBoundingClientRect();
-    const breathingRoom = window.matchMedia('(max-width: 720px)').matches ? 32 : 20;
+    const breathingRoom = isViewportMatch('phone') ? 32 : 20;
     return rect.bottom + breathingRoom;
   };
 
@@ -291,7 +192,7 @@ renderTimeline();
   const floatingLinks = floatingMenu ? floatingMenu.querySelectorAll('.floating-cta-link') : [];
   const heroCtaRow = document.querySelector('.hero .cta-row');
   const header = document.querySelector('.site-header');
-  const mobileQuery = window.matchMedia('(max-width: 960px)');
+  const mobileQuery = window.matchMedia(VIEWPORT_QUERIES.navCompact);
   if (!floatingMenu || !heroCtaRow || !header) return;
 
   let touchStartX = 0;
@@ -439,14 +340,18 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   sections.forEach(s => observer.observe(s));
 })();
 
-// Fades panels and cards in as they scroll into view once for stable rendering.
+// Section reveal behavior: deterministic on tablet/mobile, scroll-based on desktop.
 (() => {
-  const isMobileOrTablet = window.matchMedia('(max-width: 1199px)').matches;
-  const aboutSection = document.querySelector('#about');
-  const topFadeSections = [
-    aboutSection,
-    ...document.querySelectorAll('#focus, #projects, #stack, #timeline, #contact'),
-  ].filter(Boolean);
+  const isMobileOrTablet = isViewportMatch('tabletOrDown');
+  const topFadeSections = TOP_FADE_SECTION_SELECTORS
+    .map((selector) => document.querySelector(selector))
+    .filter(Boolean);
+
+  const syncTopFadeState = () => {
+    const nearTop = window.scrollY <= 2;
+    document.body.classList.toggle('top-fade-mode', nearTop);
+    topFadeSections.forEach((section) => section.classList.toggle('tablet-about-pre-scroll', nearTop));
+  };
 
   if (isMobileOrTablet) {
     document.querySelectorAll('.panel, .card, .timeline-item').forEach((el) => {
@@ -454,86 +359,34 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
       el.style.transitionDelay = '0ms';
     });
 
-    if (aboutSection) {
-      topFadeSections.forEach((section) => section.classList.add('tablet-about-pre-scroll'));
-      const syncAboutPreScroll = () => {
-        const nearTop = window.scrollY <= 2;
-        document.body.classList.toggle('top-fade-mode', nearTop);
-        topFadeSections.forEach((section) => section.classList.toggle('tablet-about-pre-scroll', nearTop));
-      };
-
-      syncAboutPreScroll();
-      window.addEventListener('scroll', syncAboutPreScroll, { passive: true });
-      window.addEventListener('wheel', syncAboutPreScroll, { passive: true });
-      window.addEventListener('touchmove', syncAboutPreScroll, { passive: true });
-    }
+    syncTopFadeState();
+    window.addEventListener('scroll', syncTopFadeState, { passive: true });
+    window.addEventListener('wheel', syncTopFadeState, { passive: true });
+    window.addEventListener('touchmove', syncTopFadeState, { passive: true });
 
     return;
   }
 
-  const pendingReveal = new Set();
-
-  const revealElement = (el) => {
-    if (!el || !pendingReveal.has(el)) return;
-    el.classList.add('visible');
-    pendingReveal.delete(el);
-    observer.unobserve(el);
-  };
-
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      if (isMobileOrTablet) {
-        if (entry.isIntersecting) {
-          revealElement(entry.target);
-        }
-      } else if (entry.isIntersecting) {
+      if (entry.isIntersecting) {
         entry.target.classList.add('visible');
       } else {
         entry.target.classList.remove('visible');
       }
     });
-  }, isMobileOrTablet ? { threshold: 0, rootMargin: '0px 0px 14% 0px' } : { threshold: 0.2, rootMargin: '-10% 0px -10% 0px' });
+  }, { threshold: 0.2, rootMargin: '-10% 0px -10% 0px' });
 
   document.querySelectorAll('.panel').forEach((el) => {
     el.classList.add('reveal');
-    if (isMobileOrTablet) pendingReveal.add(el);
     observer.observe(el);
   });
 
   const observeCards = () => {
-    if (isMobileOrTablet) {
-      document.querySelectorAll('.card, .timeline-item').forEach((el) => {
-        el.classList.add('reveal', 'visible');
-        el.style.transitionDelay = '0ms';
-      });
-      return;
-    }
-
     document.querySelectorAll('.card, .timeline-item').forEach((el, i) => {
       el.classList.add('reveal');
-      el.style.transitionDelay = `${(i % (isMobileOrTablet ? 3 : 4)) * (isMobileOrTablet ? 55 : 80)}ms`;
-      if (isMobileOrTablet) pendingReveal.add(el);
+      el.style.transitionDelay = `${(i % 4) * 80}ms`;
       observer.observe(el);
-    });
-  };
-
-  const sweepReveals = () => {
-    if (pendingReveal.size === 0) return;
-    pendingReveal.forEach((el) => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top <= window.innerHeight * 0.98 && rect.bottom >= -64) {
-        revealElement(el);
-      }
-    });
-  };
-
-  let sweepScheduled = false;
-  const requestSweep = () => {
-    if (sweepScheduled) return;
-    sweepScheduled = true;
-    requestAnimationFrame(() => {
-      sweepScheduled = false;
-      sweepReveals();
     });
   };
 
@@ -543,26 +396,10 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
     window.addEventListener('load', observeCards);
   }
 
-  if (aboutSection) {
-    topFadeSections.forEach((section) => section.classList.add('tablet-about-pre-scroll'));
-    aboutSection.classList.remove('visible');
-    window.addEventListener('load', () => {
-      requestAnimationFrame(() => {
-        aboutSection.classList.add('visible');
-      });
-    }, { once: true });
-
-    const syncAboutPreScroll = () => {
-      const nearTop = window.scrollY <= 2;
-      document.body.classList.toggle('top-fade-mode', nearTop);
-      topFadeSections.forEach((section) => section.classList.toggle('tablet-about-pre-scroll', nearTop));
-    };
-
-    syncAboutPreScroll();
-    window.addEventListener('scroll', syncAboutPreScroll, { passive: true });
-    window.addEventListener('wheel', syncAboutPreScroll, { passive: true });
-    window.addEventListener('touchmove', syncAboutPreScroll, { passive: true });
-  }
+  syncTopFadeState();
+  window.addEventListener('scroll', syncTopFadeState, { passive: true });
+  window.addEventListener('wheel', syncTopFadeState, { passive: true });
+  window.addEventListener('touchmove', syncTopFadeState, { passive: true });
 })();
 
 // Parallax exit for the hero - portrait and text drift at different rates as you scroll.
@@ -571,10 +408,10 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   const heroText  = document.querySelector('.hero-text');
   if (!portrait || !heroText) return;
 
-  const isTabletOrSmaller = window.matchMedia('(max-width: 1199px)').matches;
+  const isTabletOrSmaller = isViewportMatch('tabletOrDown');
   if (isTabletOrSmaller) return;
 
-  const mobileParallax = window.matchMedia('(max-width: 720px)').matches;
+  const mobileParallax = isViewportMatch('phone');
 
   function onScroll() {
     const heroEl = document.querySelector('.hero');
@@ -602,7 +439,7 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
   const ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
   if (!ctx) return;
 
-  const isTabletOrSmaller = window.matchMedia('(max-width: 1199px)').matches;
+  const isTabletOrSmaller = isViewportMatch('tabletOrDown');
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const enableShooters = !prefersReducedMotion;
   const targetFps = prefersReducedMotion ? 24 : (isTabletOrSmaller ? 24 : 45);
@@ -830,9 +667,9 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
     const accelerate = el.dataset.accelerate === "true";
 
     if (accelerate) {
-      const isMobilePhone = window.matchMedia('(max-width: 720px)').matches;
+      const isMobilePhone = isViewportMatch('phone');
       const maxPhoneTypeWidth = isMobilePhone ? Math.floor(window.innerWidth * 0.85) : Infinity;
-      const lockMobileLine = window.matchMedia('(max-width: 720px)').matches && el.classList.contains('no-cursor');
+      const lockMobileLine = isViewportMatch('phone') && el.classList.contains('no-cursor');
       const measuredWidth = lockMobileLine ? Math.ceil(el.getBoundingClientRect().width) : 0;
       const lockedWidth = lockMobileLine ? Math.min(measuredWidth, maxPhoneTypeWidth) : 0;
       const base = (Number(el.dataset.speed) || 140) * delayScale * lineDelayMultiplier;
