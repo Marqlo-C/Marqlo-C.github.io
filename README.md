@@ -1,3 +1,15 @@
+## Updating the Resume Link
+
+**How to update my resume link (for future me):**
+
+Whenever I need to update the resume that all the site buttons point to, just do this:
+
+1. Open `js/main.js` in the project root.
+2. Find the section labeled: `Resume buttons - open resume link in new tab.`
+3. Change the value of the `resumeUrl` variable to the new Google Drive (or other) link for my resume.
+4. Save and redeploy.
+
+That’s it. All resume buttons will now open the new link in a new tab. No need to touch the HTML or hunt for links in multiple places.
 # Marq Lott | Personal Website
 
 This is the personal website of Marq Lott, built as a single-page application with a cartoon-inspired, playful design. It features:

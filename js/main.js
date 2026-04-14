@@ -373,23 +373,20 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
     });
 })();
 
-// Resume modal - opens from both the hero and contact section buttons.
+// Resume buttons - open resume link in new tab.
 (() => {
-  const modal = document.getElementById('resume-modal');
+  const resumeUrl = 'https://drive.google.com/file/d/1jB8bLXCQqyy8b-PBuPUv9TzAOVx3lkoL/view?usp=sharing';
   const openBtn = document.getElementById('resume-btn');
   const floatingOpenBtn = document.getElementById('resume-btn-floating');
-  const closeBtn = modal.querySelector('.resume-close');
-  const backdrop = modal.querySelector('.resume-modal-backdrop');
+  const contactOpenBtn = document.getElementById('resume-btn-contact');
 
-  const open = () => { modal.hidden = false; document.body.style.overflow = 'hidden'; };
-  const close = () => { modal.hidden = true; document.body.style.overflow = ''; };
+  function openResume() {
+    window.open(resumeUrl, '_blank', 'noopener');
+  }
 
-  openBtn.addEventListener('click', open);
-  if (floatingOpenBtn) floatingOpenBtn.addEventListener('click', open);
-  document.getElementById('resume-btn-contact').addEventListener('click', open);
-  closeBtn.addEventListener('click', close);
-  backdrop.addEventListener('click', close);
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  if (openBtn) openBtn.addEventListener('click', openResume);
+  if (floatingOpenBtn) floatingOpenBtn.addEventListener('click', openResume);
+  if (contactOpenBtn) contactOpenBtn.addEventListener('click', openResume);
 })();
 
 // Highlights the nav link that corresponds to the section currently in view.
