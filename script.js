@@ -447,6 +447,30 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
     aboutSection,
     ...document.querySelectorAll('#focus, #projects, #stack, #timeline, #contact'),
   ].filter(Boolean);
+
+  if (isMobileOrTablet) {
+    document.querySelectorAll('.panel, .card, .timeline-item').forEach((el) => {
+      el.classList.add('reveal', 'visible');
+      el.style.transitionDelay = '0ms';
+    });
+
+    if (aboutSection) {
+      topFadeSections.forEach((section) => section.classList.add('tablet-about-pre-scroll'));
+      const syncAboutPreScroll = () => {
+        const nearTop = window.scrollY <= 2;
+        document.body.classList.toggle('top-fade-mode', nearTop);
+        topFadeSections.forEach((section) => section.classList.toggle('tablet-about-pre-scroll', nearTop));
+      };
+
+      syncAboutPreScroll();
+      window.addEventListener('scroll', syncAboutPreScroll, { passive: true });
+      window.addEventListener('wheel', syncAboutPreScroll, { passive: true });
+      window.addEventListener('touchmove', syncAboutPreScroll, { passive: true });
+    }
+
+    return;
+  }
+
   const pendingReveal = new Set();
 
   const revealElement = (el) => {
@@ -517,12 +541,6 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
     observeCards();
   } else {
     window.addEventListener('load', observeCards);
-  }
-
-  if (isMobileOrTablet) {
-    requestSweep();
-    window.addEventListener('scroll', requestSweep, { passive: true });
-    window.addEventListener('resize', requestSweep, { passive: true });
   }
 
   if (aboutSection) {
