@@ -22,6 +22,31 @@ Portfolio site for Marq Lott, built as a static frontend and deployed with GitHu
 - `js/main.js`: App behavior (navigation, reveals, modal, starfield, interactions)
 - `resources/images/`: Local image assets
 
+## Feature Inventory
+
+- Sticky top navigation with section links and active-section highlighting.
+- Desktop floating quick-action menu (LinkedIn, GitHub, email, text, resume).
+- Mobile/tablet floating action drawer with swipe/toggle behavior.
+- Hero typewriter intro with staged line timing.
+- Hero role chip with custom styling and badge icon.
+- Dynamic project cards rendered from data.
+- Dynamic timeline rendered from data.
+- Resume modal with open/close controls from multiple entry points.
+- Starfield background with shooting stars and easter-egg sprites.
+- Device-aware performance behavior (reveal strategy and starfield tuning by viewport).
+
+## Menus and Interaction Features
+
+- Top nav menu:
+  - File touchpoints: `index.html`, `css/base.css`, `js/main.js`
+  - Responsibilities: anchor navigation, smooth scroll alignment, active state highlighting.
+- Floating quick actions:
+  - File touchpoints: `index.html`, `css/base.css`, `css/responsive.css`, `js/main.js`
+  - Responsibilities: desktop persistent visibility after hero CTA, mobile drawer open/close and swipe controls.
+- Resume modal:
+  - File touchpoints: `index.html`, `css/components.css`, `js/main.js`
+  - Responsibilities: open from hero/contact/floating button, close via button, backdrop, or Escape key.
+
 ## Run Locally
 
 This is a static site, so you can open `index.html` directly.
@@ -59,6 +84,13 @@ Deployed on GitHub Pages from the `main` branch.
 
 ## Common Tasks
 
+### Update Menus or Navigation
+
+1. For top nav labels/icons/links, edit `index.html` nav markup.
+2. For top nav spacing and visuals, edit `css/base.css`.
+3. For smooth scrolling and active link behavior, edit the nav blocks in `js/main.js`.
+4. For mobile floating menu behavior, edit the floating CTA block in `js/main.js` and matching styles in `css/responsive.css`.
+
 ### Add a Project Card
 
 1. Open `js/data.js`.
@@ -90,6 +122,30 @@ Deployed on GitHub Pages from the `main` branch.
 1. Update viewport constants in `js/main.js` (`VIEWPORT_QUERIES`).
 2. Update matching media queries in `css/responsive.css`.
 3. Verify nav behavior, hero layout, and reveal behavior at each range.
+
+### Update Behavior by Device Type
+
+When making behavior changes, apply them intentionally per device profile:
+
+- Desktop (`>= 1200px`)
+  - Keep richer scroll/reveal behavior and full interaction fidelity.
+  - Validate active-section highlighting and floating quick-action timing.
+
+- Tablet (`721px - 1199px`)
+  - Prioritize scroll smoothness over heavy animation.
+  - Verify section visibility on first pass and top-of-page fade behavior.
+  - Verify shooter pause/resume during and after scroll.
+
+- Phone (`<= 720px`)
+  - Keep motion simpler and interaction targets larger.
+  - Validate floating CTA drawer ergonomics and hero text wrapping.
+  - Verify no clipped timeline cards or missing project tiles.
+
+Recommended flow for any interaction change:
+
+1. Implement in `js/main.js` behind viewport-aware branches where needed.
+2. Mirror style-level differences in `css/responsive.css`.
+3. Test all three ranges before merging.
 
 ### Update Hero Text
 
