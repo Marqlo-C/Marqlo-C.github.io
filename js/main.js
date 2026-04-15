@@ -545,7 +545,7 @@ document.querySelectorAll('a[data-gmail-fallback]').forEach(link => {
 (() => {
   const canvas = document.getElementById('starfield');
   if (!canvas) return;
-  const ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
+  const ctx = canvas.getContext('2d', { alpha: true });
   if (!ctx) return;
 
   const isTabletOrSmaller = isViewportMatch('tabletOrDown');

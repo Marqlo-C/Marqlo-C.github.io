@@ -125,6 +125,7 @@
     transform: none;
     filter: none;
     transition: opacity 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: auto;
   }
 
   .stat { flex: 1 1 0; }
@@ -238,6 +239,7 @@
     transform: none;
     filter: none;
     transition: opacity 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: auto;
   }
 
   .hero-stats {
@@ -345,6 +347,7 @@
     transform: none;
     filter: none;
     transition: opacity 0.76s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: auto;
   }
 
   .hero-stats {
