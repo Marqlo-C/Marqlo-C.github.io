@@ -1,3 +1,15 @@
+## Portrait Coin Spin Animation
+
+To enable or disable the portrait spin animation on desktop load:
+
+1. Open `js/main.js`.
+2. At the top of the file, find the line:
+
+  `const ENABLE_PORTRAIT_SPIN = true;`
+
+3. Set it to `false` to disable the effect, or `true` to enable it.
+
+This controls whether the portrait spins like a coin when the site loads on desktop screens. No need to edit any other code.
 ## Updating the Resume Link
 
 **How to update my resume link (for future me):**

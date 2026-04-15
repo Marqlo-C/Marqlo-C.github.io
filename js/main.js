@@ -52,7 +52,15 @@ const TOP_FADE_SECTION_SELECTORS = Object.freeze([
 
 const isViewportMatch = (queryKey) => window.matchMedia(VIEWPORT_QUERIES[queryKey]).matches;
 
-// Draws a responsive hand-drawn arrow from the "now" text to the role badge.
+
+// --- Portrait Coin Spin Animation ---
+// To enable or disable the portrait spin effect on desktop load, set ENABLE_PORTRAIT_SPIN below.
+const ENABLE_PORTRAIT_SPIN = true;
+
+/**
+ * Draws a responsive hand-drawn arrow from the "now" text to the role badge in the hero section.
+ * The arrow dynamically adjusts its path based on viewport size and layout, and animates in after the hero typewriter effect completes.
+ */
 (() => {
   const hero = document.querySelector('.hero');
   const startEl = document.querySelector('.now-anchor');
@@ -61,9 +69,26 @@ const isViewportMatch = (queryKey) => window.matchMedia(VIEWPORT_QUERIES[queryKe
   const ledeEl = document.querySelector('.lede-delayed');
   const arrowSvg = document.querySelector('.hero-now-arrow');
   const arrowPath = arrowSvg ? arrowSvg.querySelector('.hero-now-arrow-line') : null;
+  const portraitFrame = document.querySelector('.portrait-frame');
   if (!hero || !startEl || !endEl || !arrowSvg || !arrowPath) return;
 
   let arrowReady = false;
+
+  /**
+   * Triggers the coin spin animation for the portrait on desktop load.
+   * Controlled by ENABLE_PORTRAIT_SPIN (see above).
+   */
+  function triggerPortraitSpin() {
+    if (!ENABLE_PORTRAIT_SPIN) return;
+    if (!portraitFrame) return;
+    if (window.matchMedia('(min-width: 961px)').matches) {
+      portraitFrame.classList.add('coin-spin');
+      // Remove the class after animation ends (2.2s)
+      setTimeout(() => {
+        portraitFrame.classList.remove('coin-spin');
+      }, 2300);
+    }
+  }
 
   const updateArrow = () => {
     const heroRect = hero.getBoundingClientRect();
@@ -105,6 +130,9 @@ const isViewportMatch = (queryKey) => window.matchMedia(VIEWPORT_QUERIES[queryKe
   const activateArrow = () => {
     if (arrowReady) return;
     arrowReady = true;
+
+    // Trigger coin spin on desktop load immediately
+    triggerPortraitSpin();
 
     if (ledeEl) {
       const isTablet = isViewportMatch('tabletOnly');
