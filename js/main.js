@@ -83,10 +83,9 @@ const ENABLE_PORTRAIT_SPIN = true;
     if (!portraitFrame) return;
     if (window.matchMedia('(min-width: 961px)').matches) {
       portraitFrame.classList.add('coin-spin');
-      // Remove the class after animation ends (2.2s)
-      setTimeout(() => {
-        portraitFrame.classList.remove('coin-spin');
-      }, 2300);
+      // Class is intentionally kept — animation-fill-mode: both holds the element
+      // at its final keyframe, preventing Chrome from re-evaluating the base
+      // portraitEntrance animation and causing a single-frame flicker on removal.
     }
   }
 

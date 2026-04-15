@@ -293,7 +293,7 @@
     transform: rotateY(360deg) scale(1.08);
     opacity: 1;
   }
-  95% {
+  96% {
     transform: rotateY(0deg) scale(1.01);
     opacity: 1;
   }
